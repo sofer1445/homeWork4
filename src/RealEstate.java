@@ -43,8 +43,7 @@ public class RealEstate {
                 Are you realtor or a regular user?\s
                 for realtor press 1\s
                 for regular user press 2\s""");
-        //int type = scanner.nextInt();
-        int typeUser = realtorOrRegular();
+        int typeUser = realtorOrRegular();//הערך לא נשמר בUSER ואז אי אפשר לגשת אליו מה עושים?
         addUserToArray(userName, password, number, typeUser);
         mainMenu();
     }
@@ -109,9 +108,9 @@ public class RealEstate {
 
     private int realtorOrRegular() {
         Scanner scanner = new Scanner(System.in);
+        int type = scanner.nextInt();// כל הרצת תוכנית מבקש להכניס ערך
         int realtor = 10;
         int regular = 3;
-        int type = scanner.nextInt();
         if (type == 1) {
             return realtor;
         }
