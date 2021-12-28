@@ -1,14 +1,15 @@
+import java.util.Locale;
 import java.util.Scanner;
 
 public class RealEstate {
 
     private User[] users;
     private String property;
-    private String address;
+    private Address[] address;
 
     public RealEstate() {
         this.users = new User[0];
-
+        this.address = new Address[10];
     }
 
     public void createUser() {
@@ -42,8 +43,8 @@ public class RealEstate {
                 Are you realtor or a regular user?\s
                 for realtor press 1\s
                 for regular user press 2\s""");
-        int type = scanner.nextInt();
-        boolean typeUser = realtorOrRegular(type);
+        //int type = scanner.nextInt();
+        int typeUser = realtorOrRegular();
         addUserToArray(userName, password, number, typeUser);
         mainMenu();
     }
@@ -61,14 +62,15 @@ public class RealEstate {
         return checkAvailability;
     }
 
-    private void addUserToArray(String username, String password, String number, boolean typeUser) {
+    private void addUserToArray(String username, String password, String number, int typeUser) {
         User[] newArray = new User[this.users.length + 1];
         for (int i = 0; i < this.users.length; i++) {
             newArray[i] = this.users[i];
         }
-        User userToAdd = new User(username, password, number, typeUser);
+        User userToAdd = new User(username, password,typeUser);
         newArray[this.users.length] = userToAdd;
         this.users = newArray;
+
     }
 
     private boolean passwordCheck(String password) {
@@ -105,14 +107,18 @@ public class RealEstate {
         return false;
     }
 
-    private boolean realtorOrRegular(int type) {
+    private int realtorOrRegular() {
+        Scanner scanner = new Scanner(System.in);
+        int realtor = 10;
+        int regular = 3;
+        int type = scanner.nextInt();
         if (type == 1) {
-            return true;
+            return realtor;
         }
-        return false;
+        return regular;
     }
 
-    private void mainMenu(){
+    public void mainMenu() {
         System.out.println("""
                 Hello User, Please select one of the following options:
                 1 - Create an account
@@ -120,25 +126,28 @@ public class RealEstate {
                 3 - Finish the program""");
         Scanner scanner = new Scanner(System.in);
         int options = scanner.nextInt();
-        if(options==1){
+        if (options == 1) {
             createUser();
         }
-        if(options==2){
+        if (options == 2) {
             userLogin();
         }
-        if(options==3){
-            //Finish the program
+        if (options == 3) {
+            System.out.println("good bye");
         }
     }
-    public User userLogin(){
+
+    public User userLogin() {
         Scanner scanner = new Scanner(System.in);
         int theChoice;
         System.out.println("Please enter a username");
         String userName = scanner.nextLine();
         System.out.println("Type a password");
         String password = scanner.nextLine();
-        User checkExists = checkInArrayUser(userName);
-        if(checkExists != null){
+        int type = realtorOrRegular();
+        User user = new User(userName, password,type);
+        User checkExists = checkInArrayUser(user);
+        if (checkExists != null) {
             System.out.println("""
                     1 - Post a new property
                     2 - Remove advertising on a property
@@ -147,23 +156,99 @@ public class RealEstate {
                     5 - Search for property by parameters
                     6 - Disconnect and return to the main menu""");
             theChoice = scanner.nextInt();
+            if(theChoice == 1) {
+                postNewProperty(user);
+            }
+//            switch (theChoice){
+//                case 1 :
+//                    theChoice = postNewProperty(User user);
+
         } else {
-            System.out.println("User does not exist");
+            System.out.println("User does not exist or one of the parameters is incorrect");
             mainMenu();
             return null;
         }
-            return null;
+        return null;
     }
-    private User checkInArrayUser(String user){
+
+    private User checkInArrayUser(User user) {
         for (int i = 0; i < users.length; i++) {
-            if(users[i].equals(user)){//כל בזמן יוצא false בגלל שבוא בדוק לפי כתובת ולא מציג אותו בתוך המערך כstring  
-                return users[i];
+            User currentUser = this.users[i];
+            if (currentUser.getUsername().equals(user.getUsername())) {
+                if (currentUser.getPassword().equals(user.getPassword())) {
+                    return users[i];
+                }
             }
-            }return null;
+        }
+        return null;
 
 
+    }
+
+    private boolean postNewProperty(User user) {
+        Scanner scanner = new Scanner(System.in);
+        int numberOfAssets = realtorOrRegular();
+        if (numberOfAssets > 0) {
+            numberOfAssets--;
+            System.out.println("""
+                    Ashkelon
+                    Beer Sheva
+                    Tel Aviv""");
+            System.out.println("type a city name");
+            String cityName = scanner.nextLine();
+            cityName.toLowerCase(Locale.ROOT);
+            listAddress(cityName);
+            System.out.println("Choose a street name");
+
+
+        return true;
+
+    }
+        System.out.println("You have reached the limit of property advertising");
+        return false;
+}
+
+
+    public void address() {
+        Address[] firstAddress = new Address[this.address.length];
+        firstAddress[0] = new Address("beer sheva", "ben gorion");
+        firstAddress[1] = new Address("tel aviv", "ben gorion");
+        firstAddress[2] = new Address("beer sheva", "dror");
+        firstAddress[3] = new Address("ashkelon", "tabeln");
+        firstAddress[4] = new Address("beer sheva", "golda mair");
+        firstAddress[5] = new Address("ashkelon", "narkis");
+        firstAddress[6] = new Address("tel aviv", "hagana");
+        firstAddress[7] = new Address("tel aviv", "bograshov");
+        firstAddress[8] = new Address("ashkelon", "ali cohen");
+        firstAddress[9] = new Address("beer sheva", "kadesh");
+
+    }
+    public void listAddress (String address){
+        if(address.equals("ashkelon")){
+            System.out.println("""
+                        tabeln
+                        narkis
+                        ali cohen
+                        """);
+        }if(address.equals("beer sheva")){
+            System.out.println("""
+                        ben gorion
+                        dror
+                        kasesh
+                        """);
+        }
+        if(address.equals("tal aviv")){
+            System.out.println("""
+                        ben gorion
+                        hagana
+                        bograshov
+                        """);
         }
     }
 
+}
+//    User[] newArray = new User[this.users.length + 1];
+//        for (int i = 0; i < this.users.length; i++) {
+//        newArray[i] = this.users[i];
 
 
