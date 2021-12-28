@@ -198,7 +198,20 @@ public class RealEstate {
             String cityName = scanner.nextLine();
             cityName.toLowerCase(Locale.ROOT);
             listAddress(cityName);
+            if(!cityName.equals("ashkelon") && !cityName.equals("beer sheva") && !cityName.equals("tel aviv")){
+                System.out.println("The typed city is incorrect");
+                return false;
+            }
             System.out.println("Choose a street name");
+            String streetName = scanner.nextLine();
+            streetName.toLowerCase(Locale.ROOT);
+            for (int i = 0; i < address.length; i++) {
+                if(address[i].getStreetName().equals(streetName)){
+
+
+                }
+
+            }
 
 
         return true;
@@ -210,19 +223,22 @@ public class RealEstate {
 
 
     public void address() {
-        Address[] firstAddress = new Address[this.address.length];
-        firstAddress[0] = new Address("beer sheva", "ben gorion");
-        firstAddress[1] = new Address("tel aviv", "ben gorion");
-        firstAddress[2] = new Address("beer sheva", "dror");
-        firstAddress[3] = new Address("ashkelon", "tabeln");
-        firstAddress[4] = new Address("beer sheva", "golda mair");
-        firstAddress[5] = new Address("ashkelon", "narkis");
-        firstAddress[6] = new Address("tel aviv", "hagana");
-        firstAddress[7] = new Address("tel aviv", "bograshov");
-        firstAddress[8] = new Address("ashkelon", "ali cohen");
-        firstAddress[9] = new Address("beer sheva", "kadesh");
+        Address[] addresses = new Address[this.address.length];
+        address[0] = new Address("beer sheva,", "ben gurion");
+        address[1] = new Address("beer sheva", "dror");
+        address[2] = new Address("beer sheva", "golda meir");
+        address[3] = new Address("beer sheva", "kadesh");
+        address[4] = new Address("tel aviv", "ben gurion");
+        address[5] = new Address("tel aviv", "haagana");
+        address[6] = new Address("tel aviv", "bograshov");
+        address[7] = new Address("ashkelon", "tabeln");
+        address[8] = new Address("ashkelon", "narkis");
+        address[9] = new Address("ashkelon", "ali cohen");
+
+        //לבדוק עם שי אם אפשר להדפיס כך או צריך לעשות לולאה כדי לחלץ את הערים
 
     }
+
     public void listAddress (String address){
         if(address.equals("ashkelon")){
             System.out.println("""
