@@ -14,6 +14,7 @@ public class RealEstate {
     }
 
     public void createUser() {
+        boolean typeUser;
         System.out.println("Choose a username");
         String userName = scanner.nextLine();
         boolean checkAvailability = userAvailability(userName);
@@ -44,7 +45,13 @@ public class RealEstate {
                 for realtor press 1\s
                 for regular user press 2\s""");
         int type = scanner.nextInt();
-        boolean typeUser = realtorOrRegular(type);
+        if(type == 1){
+            typeUser = true;
+        }
+        else {
+            typeUser = false;
+        }
+        typeUser = realtorOrRegular(typeUser);
         addUserToArray(userName, password, number, typeUser);
 
     }
@@ -107,18 +114,19 @@ public class RealEstate {
         return false;
     }
 
-    private boolean realtorOrRegular(int type) {
-        if (type == 1) {
+    private boolean realtorOrRegular(boolean type) {
+        if (type) {
             return true;
         }
         return false;
     }
 
     public User userLogin() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter a username");
-        String userName = scanner.next();
+        String userName = scanner.nextLine();
         System.out.println("Type a password");
-        String password = scanner.next();
+        String password = scanner.nextLine();
         User user = checkInArrayUser(userName , password);
         if (user != null) {
             return user;
@@ -141,7 +149,18 @@ public class RealEstate {
     }
 
    public boolean postNewProperty(User user) {
-        int numberOfAssets = realtorOrRegular() ; // לטפל בזה צריך לקבל כאן את הסוג משתמש
+        Scanner scanner = new Scanner(System.in);
+       boolean mayPublish = false;
+       int numberOfAssets;
+       for (int i = 0; i < users.length; i++) {
+          boolean type = users[i].getTypeUser();
+            mayPublish = realtorOrRegular(type);
+       }
+        if(mayPublish){
+        numberOfAssets = 10;
+        }else {
+            numberOfAssets =3;
+        }
         if (numberOfAssets > 0) {
             numberOfAssets--;
             System.out.println("""
@@ -150,15 +169,15 @@ public class RealEstate {
                     Tel Aviv""");
             System.out.println("type a city name");
             String cityName = scanner.nextLine();
-            cityName.toLowerCase(Locale.ROOT);
-            listAddress(cityName);
-            if(!cityName.equals("ashkelon") && !cityName.equals("beer sheva") && !cityName.equals("tel aviv")){
+            cityName =  cityName.toLowerCase(Locale.ROOT);
+            if(!cityName.equals("ashkelon") && !cityName.equals("tel aviv") && !cityName.equals("beer sheva")){
                 System.out.println("The typed city is incorrect");
                 return false;
             }
+            listAddress(cityName);
             System.out.println("Choose a street name");
             String streetName = scanner.nextLine();
-            streetName.toLowerCase(Locale.ROOT);
+            streetName = streetName.toLowerCase(Locale.ROOT);
             for (int i = 0; i < address.length; i++) {
                 if(address[i].getStreetName().equals(streetName)){
                 }
@@ -201,7 +220,7 @@ public class RealEstate {
                         kasesh
                         """);
         }
-        if(address.equals("tal aviv")){
+        if(address.equals("tel aviv")){
             System.out.println("""
                         ben gorion
                         hagana

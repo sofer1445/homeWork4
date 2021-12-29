@@ -37,7 +37,7 @@ public class Main {
                         userSelection2 = scanner.nextInt();
                     } while (userSelection2 > 6 || userSelection2 < 1);
                     switch (userSelection2) {
-                        case 1:
+                        case 1: //לשנות לשמות משמעותים
                             realEstate.postNewProperty(logain);
                             break;
                         case 2:
