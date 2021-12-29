@@ -3,15 +3,16 @@ public class User {
     private String userName;
     private String password;
     private String number;
-    private int typeUser;
+    private boolean typeUser;
 
-    public User(String username, String password , int typeUser) {
+    public User(String username, String password , String number, boolean typeUser) {
         this.userName = username;
         this.password = password;
         this.typeUser = typeUser;
+        this.number = number;
     }
 
-    public void setUserName(String userName) {
+    public String setUserName(String userName) {
         this.userName = userName;
     }
 
@@ -27,11 +28,11 @@ public class User {
         this.password = password;
     }
 
-    public int getTypeUser() {
-        return typeUser;
+    public boolean getTypeUser() {
+        return this.typeUser;
     }
 
-    public void setTypeUser(int typeUser) {
+    public void setTypeUser(boolean typeUser) {
         this.typeUser = typeUser;
     }
 }

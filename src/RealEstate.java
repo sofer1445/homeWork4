@@ -2,6 +2,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class RealEstate {
+    Scanner scanner = new Scanner(System.in);
 
     private User[] users;
     private String property;
@@ -13,7 +14,6 @@ public class RealEstate {
     }
 
     public void createUser() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a username");
         String userName = scanner.nextLine();
         boolean checkAvailability = userAvailability(userName);
@@ -43,8 +43,10 @@ public class RealEstate {
                 Are you realtor or a regular user?\s
                 for realtor press 1\s
                 for regular user press 2\s""");
-        int typeUser = realtorOrRegular();//הערך לא נשמר בUSER ואז אי אפשר לגשת אליו מה עושים?
-        addUserToArray(userName, password, number, typeUser);
+
+        int typeUser = scanner.nextInt();
+        boolean type = realtorOrRegular(typeUser);
+        addUserToArray(userName, password, number, type);
         mainMenu();
     }
 
@@ -61,12 +63,12 @@ public class RealEstate {
         return checkAvailability;
     }
 
-    private void addUserToArray(String username, String password, String number, int typeUser) {
+    private void addUserToArray(String username, String password, String number , boolean typeUser) {
         User[] newArray = new User[this.users.length + 1];
         for (int i = 0; i < this.users.length; i++) {
             newArray[i] = this.users[i];
         }
-        User userToAdd = new User(username, password,typeUser);
+        User userToAdd = new User(username, password, number , typeUser);
         newArray[this.users.length] = userToAdd;
         this.users = newArray;
 
@@ -106,15 +108,11 @@ public class RealEstate {
         return false;
     }
 
-    private int realtorOrRegular() {
-        Scanner scanner = new Scanner(System.in);
-        int type = scanner.nextInt();// כל הרצת תוכנית מבקש להכניס ערך
-        int realtor = 10;
-        int regular = 3;
+    private boolean realtorOrRegular(int type) {
         if (type == 1) {
-            return realtor;
+            return true;
         }
-        return regular;
+        return false;
     }
 
     public void mainMenu() {
@@ -123,7 +121,6 @@ public class RealEstate {
                 1 - Create an account
                 2 - Log in to an existing account
                 3 - Finish the program""");
-        Scanner scanner = new Scanner(System.in);
         int options = scanner.nextInt();
         if (options == 1) {
             createUser();
@@ -137,15 +134,16 @@ public class RealEstate {
     }
 
     public User userLogin() {
-        Scanner scanner = new Scanner(System.in);
         int theChoice;
         System.out.println("Please enter a username");
         String userName = scanner.nextLine();
         System.out.println("Type a password");
         String password = scanner.nextLine();
-        int type = realtorOrRegular();
-        User user = new User(userName, password,type);
-        User checkExists = checkInArrayUser(user);
+      //  User type;
+     //   boolean check = type.getTypeUser();
+
+        //User user = new User(userName, password,type);
+        User checkExists = checkInArrayUser(userName , password);
         if (checkExists != null) {
             System.out.println("""
                     1 - Post a new property
@@ -170,11 +168,11 @@ public class RealEstate {
         return null;
     }
 
-    private User checkInArrayUser(User user) {
+    private User checkInArrayUser(String userName , String password ) {
         for (int i = 0; i < users.length; i++) {
             User currentUser = this.users[i];
-            if (currentUser.getUsername().equals(user.getUsername())) {
-                if (currentUser.getPassword().equals(user.getPassword())) {
+            if (currentUser.getUsername().equals(userName)) {
+                if (currentUser.getPassword().equals(password)) {
                     return users[i];
                 }
             }
@@ -183,9 +181,10 @@ public class RealEstate {
 
 
     }
+    public int addQuantity (){
 
+    }
     private boolean postNewProperty(User user) {
-        Scanner scanner = new Scanner(System.in);
         int numberOfAssets = realtorOrRegular();
         if (numberOfAssets > 0) {
             numberOfAssets--;
