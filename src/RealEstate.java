@@ -43,11 +43,10 @@ public class RealEstate {
                 Are you realtor or a regular user?\s
                 for realtor press 1\s
                 for regular user press 2\s""");
+        int type = scanner.nextInt();
+        boolean typeUser = realtorOrRegular(type);
+        addUserToArray(userName, password, number, typeUser);
 
-        int typeUser = scanner.nextInt();
-        boolean type = realtorOrRegular(typeUser);
-        addUserToArray(userName, password, number, type);
-        mainMenu();
     }
 
     public boolean userAvailability(String user) {
@@ -63,7 +62,7 @@ public class RealEstate {
         return checkAvailability;
     }
 
-    private void addUserToArray(String username, String password, String number , boolean typeUser) {
+    private void addUserToArray(String username, String password, String number, boolean typeUser) {
         User[] newArray = new User[this.users.length + 1];
         for (int i = 0; i < this.users.length; i++) {
             newArray[i] = this.users[i];
@@ -85,6 +84,7 @@ public class RealEstate {
                 }
                 if (password.charAt(j) <= '9') {
                     counterNumber++;
+
                 }
                 if (counterNumber >= 1 && counterTav >= 1) {
                     return true;
@@ -95,7 +95,6 @@ public class RealEstate {
     }
 
     private boolean phoneNumberCheck(String number) {
-
         if (number.length() == 10) {
             if (number.charAt(0) == '0' && number.charAt(1) == '5') {
                 for (int i = 2; i <= number.length(); i++) {
@@ -115,64 +114,23 @@ public class RealEstate {
         return false;
     }
 
-    public void mainMenu() {
-        System.out.println("""
-                Hello User, Please select one of the following options:
-                1 - Create an account
-                2 - Log in to an existing account
-                3 - Finish the program""");
-        int options = scanner.nextInt();
-        if (options == 1) {
-            createUser();
-        }
-        if (options == 2) {
-            userLogin();
-        }
-        if (options == 3) {
-            System.out.println("good bye");
-        }
-    }
-
     public User userLogin() {
-        int theChoice;
         System.out.println("Please enter a username");
-        String userName = scanner.nextLine();
+        String userName = scanner.next();
         System.out.println("Type a password");
-        String password = scanner.nextLine();
-      //  User type;
-     //   boolean check = type.getTypeUser();
-
-        //User user = new User(userName, password,type);
-        User checkExists = checkInArrayUser(userName , password);
-        if (checkExists != null) {
-            System.out.println("""
-                    1 - Post a new property
-                    2 - Remove advertising on a property
-                    3 - View all assets in the system
-                    4 - View all assets posted by the user
-                    5 - Search for property by parameters
-                    6 - Disconnect and return to the main menu""");
-            theChoice = scanner.nextInt();
-            if(theChoice == 1) {
-                postNewProperty(user);
-            }
-//            switch (theChoice){
-//                case 1 :
-//                    theChoice = postNewProperty(User user);
-
-        } else {
-            System.out.println("User does not exist or one of the parameters is incorrect");
-            mainMenu();
-            return null;
+        String password = scanner.next();
+        User user = checkInArrayUser(userName , password);
+        if (user != null) {
+            return user;
         }
         return null;
     }
 
-    private User checkInArrayUser(String userName , String password ) {
+    private User checkInArrayUser(String userName ,String password) {
         for (int i = 0; i < users.length; i++) {
-            User currentUser = this.users[i];
-            if (currentUser.getUsername().equals(userName)) {
-                if (currentUser.getPassword().equals(password)) {
+            User user = this.users[i];
+            if (user.getUsername().equals(userName)) {
+                if (user.getPassword().equals(password)) {
                     return users[i];
                 }
             }
@@ -181,11 +139,9 @@ public class RealEstate {
 
 
     }
-    public int addQuantity (){
 
-    }
-    private boolean postNewProperty(User user) {
-        int numberOfAssets = realtorOrRegular();
+   public boolean postNewProperty(User user) {
+        int numberOfAssets = realtorOrRegular() ; // לטפל בזה צריך לקבל כאן את הסוג משתמש
         if (numberOfAssets > 0) {
             numberOfAssets--;
             System.out.println("""
@@ -205,15 +161,9 @@ public class RealEstate {
             streetName.toLowerCase(Locale.ROOT);
             for (int i = 0; i < address.length; i++) {
                 if(address[i].getStreetName().equals(streetName)){
-
-
                 }
-
             }
-
-
         return true;
-
     }
         System.out.println("You have reached the limit of property advertising");
         return false;

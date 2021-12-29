@@ -13,7 +13,7 @@ public class User {
     }
 
     public String setUserName(String userName) {
-        this.userName = userName;
+      return this.userName;
     }
 
     public String getUsername() {
