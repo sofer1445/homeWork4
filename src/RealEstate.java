@@ -1,4 +1,5 @@
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class RealEstate {
@@ -6,7 +7,7 @@ public class RealEstate {
 
     private User[] users;
     private String property;
-    private Address[] address;
+    private Address[] address;//לחלץ את הערים דרך המערך לא להדפיס ישר
 
     public RealEstate() {
         this.users = new User[0];
@@ -45,10 +46,9 @@ public class RealEstate {
                 for realtor press 1\s
                 for regular user press 2\s""");
         int type = scanner.nextInt();
-        if(type == 1){
+        if (type == 1) {
             typeUser = true;
-        }
-        else {
+        } else {
             typeUser = false;
         }
         typeUser = realtorOrRegular(typeUser);
@@ -74,7 +74,7 @@ public class RealEstate {
         for (int i = 0; i < this.users.length; i++) {
             newArray[i] = this.users[i];
         }
-        User userToAdd = new User(username, password, number , typeUser);
+        User userToAdd = new User(username, password, number, typeUser);
         newArray[this.users.length] = userToAdd;
         this.users = newArray;
 
@@ -127,14 +127,14 @@ public class RealEstate {
         String userName = scanner.nextLine();
         System.out.println("Type a password");
         String password = scanner.nextLine();
-        User user = checkInArrayUser(userName , password);
+        User user = checkInArrayUser(userName, password);
         if (user != null) {
             return user;
         }
         return null;
     }
 
-    private User checkInArrayUser(String userName ,String password) {
+    private User checkInArrayUser(String userName, String password) {
         for (int i = 0; i < users.length; i++) {
             User user = this.users[i];
             if (user.getUsername().equals(userName)) {
@@ -148,50 +148,61 @@ public class RealEstate {
 
     }
 
-   public boolean postNewProperty(User user) {
+    public boolean postNewProperty(User user) {
         Scanner scanner = new Scanner(System.in);
-       boolean mayPublish = false;
-       int numberOfAssets;
-       for (int i = 0; i < users.length; i++) {
-          boolean type = users[i].getTypeUser();
+        boolean mayPublish = false;
+        String[] cityName = new String[10];
+        String counter = "null";
+        int numberOfAssets;
+        for (int i = 0; i < users.length; i++) {
+            boolean type = users[i].getTypeUser();
             mayPublish = realtorOrRegular(type);
-       }
-        if(mayPublish){
-        numberOfAssets = 10;
-        }else {
-            numberOfAssets =3;
+        }
+        if (mayPublish) {
+            numberOfAssets = 10;
+        } else {
+            numberOfAssets = 3;
         }
         if (numberOfAssets > 0) {
             numberOfAssets--;
-            System.out.println("""
-                    Ashkelon
-                    Beer Sheva
-                    Tel Aviv""");
-            System.out.println("type a city name");
-            String cityName = scanner.nextLine();
-            cityName =  cityName.toLowerCase(Locale.ROOT);
-            if(!cityName.equals("ashkelon") && !cityName.equals("tel aviv") && !cityName.equals("beer sheva")){
-                System.out.println("The typed city is incorrect");
-                return false;
+            address();
+            for (int i = 0; i < cityName.length; i++) {
+                cityName[i] = address[i].getCityName();
+
             }
-            listAddress(cityName);
-            System.out.println("Choose a street name");
-            String streetName = scanner.nextLine();
-            streetName = streetName.toLowerCase(Locale.ROOT);
-            for (int i = 0; i < address.length; i++) {
-                if(address[i].getStreetName().equals(streetName)){
-                }
+                for (int j = 0; j < address.length; j++) {
+                    if (!Objects.equals(counter, cityName[j])) {
+                        counter = cityName[j];
+                        System.out.println(cityName[j]);
+
+                    }
             }
+
+        System.out.println("type a city name");
+        String cityNameTwo = scanner.nextLine();
+        cityNameTwo = cityNameTwo.toLowerCase(Locale.ROOT);
+        if (!cityNameTwo.equals("ashkelon") && !cityNameTwo.equals("tel aviv") && !cityNameTwo.equals("beer sheva")) {
+            System.out.println("The typed city is incorrect");
+            return false;
+        }
+        listAddress(cityNameTwo);
+        System.out.println("Choose a street name");
+        String streetName = scanner.nextLine();
+        streetName = streetName.toLowerCase(Locale.ROOT);
+        for (int i = 0; i < address.length; i++) {
+            if (address[i].getStreetName().equals(streetName)) {
+            }
+        }
         return true;
     }
         System.out.println("You have reached the limit of property advertising");
         return false;
 }
 
-
+//public final int ggg  =12;//דוגמא לפינל
     public void address() {
         Address[] addresses = new Address[this.address.length];
-        address[0] = new Address("beer sheva,", "ben gurion");
+        address[0] = new Address("beer sheva", "ben gurion");
         address[1] = new Address("beer sheva", "dror");
         address[2] = new Address("beer sheva", "golda meir");
         address[3] = new Address("beer sheva", "kadesh");
