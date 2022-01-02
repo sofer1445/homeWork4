@@ -4,17 +4,17 @@ public class Property {
     private int numberRooms;
     private float price;
     private int typeProperty;
-    private boolean forRent;
+    private boolean forSale;
     private int houseNumber;
     private int floorNumber;
     private User user;
 
-    public Property(User user,int typeProperty,int numberRooms , float price , boolean forRent , int houseNumber , int floorNumber){
+    public Property(User user, int typeProperty, int numberRooms , float price , boolean forSale, int houseNumber , int floorNumber){
        // this.address = address;
         this.numberRooms = numberRooms;
         this.price = price;
         this.typeProperty = typeProperty;
-        this.forRent = forRent;
+        this.forSale = forSale;
         this.houseNumber = houseNumber;
         this.floorNumber = floorNumber;
         this.user = user;
@@ -36,8 +36,8 @@ public class Property {
         return typeProperty;
     }
 
-    public boolean isForRent() {
-        return forRent;
+    public boolean isForSale() {
+        return forSale;
     }
 
     public int getFloorNumber() {
@@ -68,8 +68,8 @@ public class Property {
         this.typeProperty = typeProperty;
     }
 
-    public void setForRent(boolean forRent) {
-        this.forRent = forRent;
+    public void setForSale(boolean forSale) {
+        this.forSale = forSale;
     }
 
     public void setFloorNumber(int floorNumber) {
@@ -89,7 +89,7 @@ public class Property {
         return "User Information : "  + "\n" + user.toString()  + "\n" +
                 "Property {" + "\n" +
                 "Type Property : " + this.typeProperty + "\n" +
-                "for Rent : " + this.forRent +  "\n" +
+                "for Sale : " + this.forSale +  "\n" +
                 "House Number : " +this.houseNumber + "\n" +
                 "Floor Number :" + this.floorNumber  + "\n" +
                 "Number Rooms : " + this.numberRooms  + "\n" +

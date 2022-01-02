@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class RealEstate {
     Scanner scanner = new Scanner(System.in);
+    public int maximumOptions = 11;
+    public int aNumberOfActualOptions = 1;
 
     private User[] users;
     private Property[] property;
@@ -17,6 +19,7 @@ public class RealEstate {
 
     public void createUser() {
         boolean typeUser;
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a username");
         String userName = scanner.nextLine();
         boolean checkAvailability = userAvailability(userName);
@@ -152,6 +155,7 @@ public class RealEstate {
     public boolean postNewProperty(User user) {
         Scanner scanner = new Scanner(System.in);
         boolean mayPublish = false;
+
         String[] cityName = new String[10];
         String counter = "null";
         int numberOfAssets;
@@ -160,12 +164,11 @@ public class RealEstate {
             mayPublish = realtorOrRegular(type);
         }
         if (mayPublish) {
-            numberOfAssets = 10;
+            numberOfAssets = maximumOptions;
         } else {
-            numberOfAssets = 3;
+            numberOfAssets = maximumOptions -7;
         }
         if (numberOfAssets > 0) {
-            numberOfAssets--;
             address();
             System.out.println("Here is the list of cities available");
             for (int i = 0; i < cityName.length; i++) {
@@ -201,6 +204,8 @@ public class RealEstate {
                 }
             }
             boolean answerOfAdvertisingSuccess = propertyType(user);
+            maximumOptions--;
+            aNumberOfActualOptions++;
 //התוכנית חוזרת להתחלה , צריך לשנות את זה שיחזור לתפריט 1-6
 
             return true;
@@ -209,7 +214,6 @@ public class RealEstate {
         return false;
     }
 
-    //public final int ggg  =12;//דוגמא לפינל
     public void address() {
         Address[] addresses = new Address[this.address.length];
         address[0] = new Address("beer sheva", "ben gurion");
@@ -287,7 +291,7 @@ public class RealEstate {
 
     private void addPropertyToArray(User user,int typeOfProperty,int floorProperty, int manyRooms, int houseNumber, boolean forSale, float price) {
         Property[] newArrayOfProperty = new Property[this.property.length + 1];
-        for (int i = 0; i < this.property.length ; i++) {
+        for (int i = 0; i < this.property.length; i++) {
             newArrayOfProperty[i] = this.property[i];
         }
         Property propertyToAdd = new Property(user,typeOfProperty,manyRooms,price,forSale,houseNumber,floorProperty);
@@ -298,19 +302,20 @@ public class RealEstate {
     }
 
     public void removeProperty(User user){
-
         for (int i = 0; i < property.length; i++) {
             User currentUser = property[i].getUser();
-            if(currentUser != user && i == property.length-1){
+            if(!property[i].getUser().equals(user) && i == property.length-1){
                System.out.println("To user there is no property in the system");
                break;
             }
             if(currentUser == user){
-                System.out.println("Your property by order: " + (i + 1) );
+                aNumberOfActualOptions--;
+                System.out.println("Your property by order: " + (aNumberOfActualOptions) );
                 System.out.print(property[i].toString());
             }
-        }
+        } if(property.length == 0){
+            System.out.println("To user there is no property in the system");
     }
-}
+}}
 
 
