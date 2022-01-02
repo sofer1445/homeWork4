@@ -7,11 +7,12 @@ public class RealEstate {
 
     private User[] users;
     private Property[] property;
-    private Address[] address;//לחלץ את הערים דרך המערך לא להדפיס ישר
+    private Address[] address;
 
     public RealEstate() {
         this.users = new User[0];
         this.address = new Address[10];
+        this.property = new Property[0];
     }
 
     public void createUser() {
@@ -199,23 +200,8 @@ public class RealEstate {
                     }
                 }
             }
-            System.out.println("""
-                    What is the type of property
-                    1 - for a standard apartment in an apartment building,
-                    2 - for a penthouse apartment in an apartment building,
-                    3 - For a private home.
-                    Select options 1 to 3""");
-            int typeOfProperty = scanner.nextInt();
-            switch (typeOfProperty) {
-                case 1:
-                    apartmentInTheBuilding();
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-
-            }
+            boolean answerOfAdvertisingSuccess = propertyType(user);
+//התוכנית חוזרת להתחלה , צריך לשנות את זה שיחזור לתפריט 1-6
 
             return true;
         }
@@ -265,10 +251,18 @@ public class RealEstate {
         }
     }
 
-    public boolean apartmentInTheBuilding() {
-        Scanner scanner = new Scanner(System.in); //להפוך את זה למתודה בשביל כל סוג נכס, להוסיף INT של טיפוס נכס
+    public boolean propertyType(User user) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("""
+                    What is the type of property
+                    1 - for a standard apartment in an apartment building,
+                    2 - for a penthouse apartment in an apartment building,
+                    3 - For a private home.
+                    Select options 1 to 3""");
+        int typeOfProperty = scanner.nextInt();
         boolean forSale = false;
-        System.out.println("What floor property?");
+        System.out.println("What floor property?\n" +
+                "(If private house enter the digit 0)");
         int floorProperty = scanner.nextInt();
         System.out.println("How many rooms are there in the property");
         int manyRooms = scanner.nextInt();
@@ -283,28 +277,41 @@ public class RealEstate {
             forSale = true;
         }
         System.out.println("What is the property value?");
-        int price = scanner.nextInt();
-        addPropertyToArray(floorProperty, manyRooms, houseNumber, forSale, price);
+        float price = scanner.nextInt();
+        addPropertyToArray(user,typeOfProperty,floorProperty, manyRooms, houseNumber, forSale, price);
         return true;
 
 
     }
 
 
-    private void addPropertyToArray(int floorProperty, int manyRooms, int houseNumber, boolean forSale, int price) {
+    private void addPropertyToArray(User user,int typeOfProperty,int floorProperty, int manyRooms, int houseNumber, boolean forSale, float price) {
         Property[] newArrayOfProperty = new Property[this.property.length + 1];
         for (int i = 0; i < this.property.length; i++) {
             newArrayOfProperty[i] = this.property[i];
         }
-        Property propertyToAdd = new Property(floorProperty, manyRooms, forSale, houseNumber, price);
+        Property propertyToAdd = new Property(user,typeOfProperty,manyRooms,price,forSale,houseNumber,floorProperty);
         newArrayOfProperty[this.property.length] = propertyToAdd;
         this.property = newArrayOfProperty;
 
 
     }
+
+    public void removeProperty(User user){
+        for (int i = 0; i < property.length; i++) {
+            User currentUser = property[i].getUser();
+            if(currentUser != user && i == property.length-1){
+               System.out.println("To user there is no property in the system");
+               break;
+            }
+            if(currentUser == user){
+                System.out.println(i);
+                toString();
+            }
+        }
+
+
+    }
 }
-//    User[] newArray = new User[this.users.length + 1];
-//        for (int i = 0; i < this.users.length; i++) {
-//        newArray[i] = this.users[i];
 
 

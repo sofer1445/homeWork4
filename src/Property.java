@@ -1,26 +1,26 @@
 public class Property {
 
-    private String address;
+    private Address address;
     private int numberRooms;
-    private int price;
+    private float price;
     private int typeProperty;
     private boolean forRent;
     private int houseNumber;
     private int floorNumber;
-    private String user;
+    private User user;
 
-    public Property(int numberRooms , int price , boolean forRent , int houseNumber , int floorNumber){
+    public Property(User user,int typeProperty,int numberRooms , float price , boolean forRent , int houseNumber , int floorNumber){
        // this.address = address;
         this.numberRooms = numberRooms;
         this.price = price;
-       // this.typeProperty = typeProperty;
+        this.typeProperty = typeProperty;
         this.forRent = forRent;
         this.houseNumber = houseNumber;
         this.floorNumber = floorNumber;
-       // this.user = user;
+        this.user = user;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
@@ -28,7 +28,7 @@ public class Property {
         return numberRooms;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
@@ -48,11 +48,11 @@ public class Property {
         return houseNumber;
     }
 
-    public String getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
@@ -60,7 +60,7 @@ public class Property {
         this.numberRooms = numberRooms;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -80,7 +80,20 @@ public class Property {
         this.houseNumber = houseNumber;
     }
 
-    public void setUser(String user) {
+    public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Property{" +
+                ", user=" + user +
+                ", typeProperty=" + typeProperty +
+                ", forRent=" + forRent +
+                ", houseNumber=" + houseNumber +
+                ", floorNumber=" + floorNumber +
+                "numberRooms=" + numberRooms +
+                ", price=" + price +
+                '}';
     }
 }
