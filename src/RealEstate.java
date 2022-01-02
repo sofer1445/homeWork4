@@ -287,7 +287,7 @@ public class RealEstate {
 
     private void addPropertyToArray(User user,int typeOfProperty,int floorProperty, int manyRooms, int houseNumber, boolean forSale, float price) {
         Property[] newArrayOfProperty = new Property[this.property.length + 1];
-        for (int i = 0; i < this.property.length; i++) {
+        for (int i = 1; i < this.property.length + 1; i++) {
             newArrayOfProperty[i] = this.property[i];
         }
         Property propertyToAdd = new Property(user,typeOfProperty,manyRooms,price,forSale,houseNumber,floorProperty);
@@ -298,6 +298,7 @@ public class RealEstate {
     }
 
     public void removeProperty(User user){
+
         for (int i = 0; i < property.length; i++) {
             User currentUser = property[i].getUser();
             if(currentUser != user && i == property.length-1){
@@ -305,12 +306,10 @@ public class RealEstate {
                break;
             }
             if(currentUser == user){
-                System.out.println(i);
-                toString();
+                System.out.println("Your property by order: " + (i + 1) );
+                System.out.print(property[i].toString());
             }
         }
-
-
     }
 }
 

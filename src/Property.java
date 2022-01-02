@@ -86,14 +86,14 @@ public class Property {
 
     @Override
     public String toString() {
-        return "Property{" +
-                ", user=" + user +
-                ", typeProperty=" + typeProperty +
-                ", forRent=" + forRent +
-                ", houseNumber=" + houseNumber +
-                ", floorNumber=" + floorNumber +
-                "numberRooms=" + numberRooms +
-                ", price=" + price +
-                '}';
+        return "User Information : "  + "\n" + user.toString()  + "\n" +
+                "Property {" + "\n" +
+                "Type Property : " + this.typeProperty + "\n" +
+                "for Rent : " + this.forRent +  "\n" +
+                "House Number : " +this.houseNumber + "\n" +
+                "Floor Number :" + this.floorNumber  + "\n" +
+                "Number Rooms : " + this.numberRooms  + "\n" +
+                "Price : " + this.price + "\n" +
+                '}' + "\n" ;
     }
 }

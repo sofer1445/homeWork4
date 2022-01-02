@@ -15,6 +15,9 @@ public class User {
     public String setUserName(String userName) {
       return this.userName;
     }
+    public String getNumber (){
+        return this.number;
+    }
 
     public String getUsername() {
         return this.userName;
@@ -34,5 +37,11 @@ public class User {
 
     public void setTypeUser(boolean typeUser) {
         this.typeUser = typeUser;
+    }
+
+    public String toString () {
+        return "Full name : " + this.getUsername() + "\n" +
+            "Phone number :  " + this.number ;
+
     }
 }

@@ -41,6 +41,7 @@ public class Main {
                             realEstate.postNewProperty(logain);
                             break;
                         case 2:
+                            realEstate.removeProperty(logain);
                             break;
                         case 3:
                             break;
