@@ -191,7 +191,14 @@ public class RealEstate {
                 return false;
             }
             System.out.println("Here is a list of the streets available in the city");
-            listAddress(cityNameTwo);
+            for (int i = 0; i < address.length;i++) {
+                do {
+                    if(Objects.equals(address[i].getCityName(), cityNameTwo)) {
+                        System.out.println(address[i].getStreetName());
+                        i++;
+                    }
+                } while (i != address.length && cityNameTwo.equals(address[i].getCityName()));
+            }
             System.out.println("Choose a street name");
             String streetName = scanner.nextLine();
             streetName = streetName.toLowerCase(Locale.ROOT);
@@ -231,29 +238,29 @@ public class RealEstate {
 
     }
 
-    public void listAddress(String address) {
-        if (address.equals("ashkelon")) {
-            System.out.println("""
-                    tabeln
-                    narkis
-                    ali cohen
-                    """);
-        }
-        if (address.equals("beer sheva")) {
-            System.out.println("""
-                    ben gorion
-                    dror
-                    kasesh
-                    """);
-        }
-        if (address.equals("tel aviv")) {
-            System.out.println("""
-                    ben gorion
-                    hagana
-                    bograshov
-                    """);
-        }
-    }
+//    public void listAddress(String address) {
+//        if (address.equals("ashkelon")) {
+//            System.out.println("""
+//                    tabeln
+//                    narkis
+//                    ali cohen
+//                    """);
+//        }
+//        if (address.equals("beer sheva")) {
+//            System.out.println("""
+//                    ben gorion
+//                    dror
+//                    kasesh
+//                    """);
+//        }
+//        if (address.equals("tel aviv")) {
+//            System.out.println("""
+//                    ben gorion
+//                    hagana
+//                    bograshov
+//                    """);
+//        }
+//    }
 
     public boolean propertyType(User user) {
         Scanner scanner = new Scanner(System.in);
@@ -316,6 +323,9 @@ public class RealEstate {
         } if(property.length == 0){
             System.out.println("To user there is no property in the system");
     }
-}}
+        System.out.println("Which property you want to remove");
+
+}
+}
 
 
