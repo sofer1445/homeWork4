@@ -287,7 +287,7 @@ public class RealEstate {
 
     private void addPropertyToArray(User user,int typeOfProperty,int floorProperty, int manyRooms, int houseNumber, boolean forSale, float price) {
         Property[] newArrayOfProperty = new Property[this.property.length + 1];
-        for (int i = 1; i < this.property.length + 1; i++) {
+        for (int i = 0; i < this.property.length ; i++) {
             newArrayOfProperty[i] = this.property[i];
         }
         Property propertyToAdd = new Property(user,typeOfProperty,manyRooms,price,forSale,houseNumber,floorProperty);
