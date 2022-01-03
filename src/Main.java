@@ -27,38 +27,45 @@ public class Main {
                     System.out.println("User does not exist or one of the parameters is incorrect");
                 } else {
                     do {
-                        System.out.println("""
-                                1 - Post a new property
-                                2 - Remove advertising on a property
-                                3 - View all assets in the system
-                                4 - View all assets posted by the user
-                                5 - Search for property by parameters
-                                6 - Disconnect and return to the main menu""");
-                        userSelection2 = scanner.nextInt();
-                    } while (userSelection2 > 6 || userSelection2 < 1);
-                    switch (userSelection2) {
-                        case 1: //לשנות לשמות משמעותים
-                            realEstate.postNewProperty(logain);
-                            break;
-                        case 2:
-                            realEstate.removeProperty(logain);
-                            break;
-                        case 3:
-                            break;
-                        case 4:
-                            break;
-                        case 5:
-                            break;
-                        case 6:
-                            break;
-                    }
-
-
+                        userSelection2 = internalMenu();
+                        switch (userSelection2) {
+                            case 1: //לשנות לשמות משמעותים
+                                realEstate.postNewProperty(logain);
+                                break;
+                            case 2:
+                                realEstate.removeProperty(logain);
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                            case 6:
+                                break;
+                        }
+                    } while (userSelection2 != 6 );
                 }
 
             }
         } while (userSelection1 != 3);
 
+
+    }
+
+    public static int internalMenu() {
+        Scanner scanner = new Scanner(System.in);
+        int userSelection;
+            System.out.println("""
+                    1 - Post a new property
+                    2 - Remove advertising on a property
+                    3 - View all assets in the system
+                    4 - View all assets posted by the user
+                    5 - Search for property by parameters
+                    6 - Disconnect and return to the main menu""");
+            userSelection = scanner.nextInt();
+
+        return userSelection;
 
     }
 }
