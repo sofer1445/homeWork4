@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class RealEstate {
     Scanner scanner = new Scanner(System.in);
-    public int maximumOptions = 11;
 
     private User[] users;
     private Property[] property;
@@ -281,7 +280,8 @@ public class RealEstate {
 
     public void removeProperty(User user) {
         Scanner scanner = new Scanner(System.in);
-
+        int delCounter = user.getNumberOfPublications();
+        int locationOfTheRemovedProperty =0;
         for (int i = 0; i < users.length; i++) {
             User userAvailable = users[i];
             int counter = 1;
@@ -289,7 +289,7 @@ public class RealEstate {
                 System.out.println("To user there is no property in the system.");
                 break;
             }
-            if (i < property.length) {
+            if (i < property.length ^ property[i] == null) {
 
                 User currentUser = property[i].getUser();
                 if (!property[i].getUser().equals(user) && i > userAvailable.getNumberOfPublications()) {//מופיע הדפסה של זה במקרה שיש שני משתמשים והראשון רוצה להסיר נכס למרות שיש לו
@@ -299,34 +299,39 @@ public class RealEstate {
                 if (currentUser == user) {
 
                     for (int j = 0; j < property.length; j++) {
-                        System.out.println("Your property by order: " + counter);
+                       if(property[j] == null) {
+                           System.out.println("Which property you want to remove?");
+                           locationOfTheRemovedProperty = scanner.nextInt();
+                           break;
+                       }
+                            System.out.println("Your property by order: " + counter);
                         counter++;
                     System.out.print(property[j].toString());
                     if(j >= property.length-1){
                         System.out.println("Which property you want to remove?");
-                        int locationOfTheRemovedProperty = scanner.nextInt();
-                        Property[] newArrayProperty = removeProperty(property[locationOfTheRemovedProperty-1]);
+                        locationOfTheRemovedProperty = scanner.nextInt();
+                        Property[] newArrayProperty = removePropertyFromArray(property[locationOfTheRemovedProperty-1]);
                         for (int k = 0; k < newArrayProperty.length; k++) {
                             System.out.print(newArrayProperty[k].toString());
                         }
-
                     }
-                }
+                    }break;
                 }
             }
 
         }
+            property[locationOfTheRemovedProperty] = null;
+            user.setNumberOfPublications(user.getNumberOfPublications()+1);
+            System.out.println("property deleted");
+            delCounter = user.getNumberOfPublications();// לא עובד טוב צריך לנסות אחרתתתת
+            delCounter--;
+            if(delCounter == 0){
+                System.out.println("To user there is no property in the system");
+            }
 
-//        int numberOfProperty =  scanner.nextInt();
-//        for (int i = 0; i < property.length ; i++) {
-//            Address listProperty = property[i].getAddress();
-//            if (numberOfProperty < 9 && numberOfProperty >= 0) {
-                  //  listProperty = listProperty[property.length-1] ;
-              //  System.out.println(listProperty);
-           // }
 
         }
-        public Property[] removeProperty (Property index){
+        public Property[] removePropertyFromArray (Property index){
            Property[] newProperty = new Property[property.length-1];
            int counter =0;
         for (int i = 0; i < property.length; i++) {
