@@ -41,7 +41,7 @@ public class User {
 
     public String toString () {
         return "Full name : " + this.getUsername() + "\n" +
-            "Phone number :  " + this.number ;
+            "Phone number : " + this.number ;
 
     }
 }

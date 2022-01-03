@@ -155,7 +155,6 @@ public class RealEstate {
     public boolean postNewProperty(User user) {
         Scanner scanner = new Scanner(System.in);
         boolean mayPublish = false;
-
         String[] cityName = new String[10];
         String counter = "null";
         int numberOfAssets;
@@ -166,23 +165,20 @@ public class RealEstate {
         if (mayPublish) {
             numberOfAssets = maximumOptions;
         } else {
-            numberOfAssets = maximumOptions -7;
+            numberOfAssets = maximumOptions - 7;
         }
         if (numberOfAssets > 0) {
             address();
             System.out.println("Here is the list of cities available");
             for (int i = 0; i < cityName.length; i++) {
                 cityName[i] = address[i].getCityName();
-
             }
             for (int j = 0; j < address.length; j++) {
                 if (!Objects.equals(counter, cityName[j])) {
                     counter = cityName[j];
                     System.out.println(cityName[j]);
-
                 }
             }
-
             System.out.println("type a city name");
             String cityNameTwo = scanner.nextLine();
             cityNameTwo = cityNameTwo.toLowerCase(Locale.ROOT);
@@ -203,7 +199,8 @@ public class RealEstate {
                     }
                 }
             }
-            boolean answerOfAdvertisingSuccess = propertyType(user);
+            Address address = new Address(cityNameTwo , streetName);
+            boolean answerOfAdvertisingSuccess = propertyType(user, address);
             maximumOptions--;
             aNumberOfActualOptions++;
 //התוכנית חוזרת להתחלה , צריך לשנות את זה שיחזור לתפריט 1-6
@@ -226,30 +223,27 @@ public class RealEstate {
         address[7] = new Address("ashkelon", "tabeln");
         address[8] = new Address("ashkelon", "narkis");
         address[9] = new Address("ashkelon", "ali cohen");
-
-        //לבדוק עם שי אם אפשר להדפיס כך או צריך לעשות לולאה כדי לחלץ את הערים
-
     }
 
-   public void listAddress(String cityNameTwo) {
-        for (int i = 0; i < address.length;i++) {
-        do {
-            if(Objects.equals(address[i].getCityName(), cityNameTwo)) {
-                System.out.println(address[i].getStreetName());
-                i++;
-            }
-        } while (i != address.length && cityNameTwo.equals(address[i].getCityName()));
+    public void listAddress(String cityNameTwo) {
+        for (int i = 0; i < address.length; i++) {
+            do {
+                if (Objects.equals(address[i].getCityName(), cityNameTwo)) {
+                    System.out.println(address[i].getStreetName());
+                    i++;
+                }
+            } while (i != address.length && cityNameTwo.equals(address[i].getCityName()));
+        }
     }
-   }
 
-    public boolean propertyType(User user) {
+    public boolean propertyType(User user, Address address) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("""
-                    What is the type of property
-                    1 - for a standard apartment in an apartment building,
-                    2 - for a penthouse apartment in an apartment building,
-                    3 - For a private home.
-                    Select options 1 to 3""");
+                What is the type of property
+                1 - for a standard apartment in an apartment building,
+                2 - for a penthouse apartment in an apartment building,
+                3 - For a private home.
+                Select options 1 to 3""");
         int typeOfProperty = scanner.nextInt();
         boolean forSale = false;
         System.out.println("What floor property?\n" +
@@ -269,43 +263,54 @@ public class RealEstate {
         }
         System.out.println("What is the property value?");
         float price = scanner.nextInt();
-        addPropertyToArray(user,typeOfProperty,floorProperty, manyRooms, houseNumber, forSale, price);
+        addPropertyToArray(user, address, typeOfProperty, floorProperty, manyRooms, houseNumber, forSale, price);
         return true;
 
 
     }
 
 
-    private void addPropertyToArray(User user,int typeOfProperty,int floorProperty, int manyRooms, int houseNumber, boolean forSale, float price) {
+    private void addPropertyToArray(User user, Address address, int typeOfProperty, int floorProperty, int manyRooms, int houseNumber, boolean forSale, float price) {
         Property[] newArrayOfProperty = new Property[this.property.length + 1];
         for (int i = 0; i < this.property.length; i++) {
             newArrayOfProperty[i] = this.property[i];
         }
-        Property propertyToAdd = new Property(user,typeOfProperty,manyRooms,price,forSale,houseNumber,floorProperty);
+        Property propertyToAdd = new Property(user,address, typeOfProperty, manyRooms, price, forSale, houseNumber, floorProperty);
         newArrayOfProperty[this.property.length] = propertyToAdd;
         this.property = newArrayOfProperty;
 
 
     }
 
-    public void removeProperty(User user){
+    public void removeProperty(User user) {
+        Scanner scanner = new Scanner(System.in);
         for (int i = 0; i < property.length; i++) {
             User currentUser = property[i].getUser();
-            if(i >= property.length-1 && !property[i].getUser().equals(user) ){//מופיע הדפסה של זה במקרה שיש שני משתמשים והראשון רוצה להסיר נכס למרות שיש לו
-               System.out.println("To user there is no property in the system");
-               break;
+            if (i >= property.length - 1 && !property[i].getUser().equals(user)) {//מופיע הדפסה של זה במקרה שיש שני משתמשים והראשון רוצה להסיר נכס למרות שיש לו
+                System.out.println("To user there is no property in the system");
+                break;
             }
-            if(currentUser == user){
+            if (currentUser == user) {
                 aNumberOfActualOptions--;
-                System.out.println("Your property by order: " + (aNumberOfActualOptions) );
+                System.out.println("Your property by order: " + (aNumberOfActualOptions));
                 System.out.print(property[i].toString());
             }
-        } if(property.length == 0){
-            System.out.println("To user there is no property in the system");
-    }
-        System.out.println("Which property you want to remove");
+        }
+        if (property.length == 0) {
+            System.out.println("To user there is no property in the system.");
+        }
+        System.out.println("Which property you want to remove?");
+//        int numberOfProperty =  scanner.nextInt();
+//        for (int i = 0; i < property.length ; i++) {
+//            Address listProperty = property[i].getAddress();
+//            if (numberOfProperty < 9 && numberOfProperty >= 0) {
+                  //  listProperty = listProperty[property.length-1] ;
+              //  System.out.println(listProperty);
+           // }
 
-}
-}
+        }
+
+    }
+
 
 

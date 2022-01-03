@@ -25,4 +25,9 @@ public class Address {
     public void setStreetName(String streetName) {
         this.streetName = streetName;
     }
+
+    public String toString () {
+        return "City Name: " + this.getCityName() + "\n" +
+                "Street Name: " + this.getStreetName() + "\n" ;
+    }
 }
