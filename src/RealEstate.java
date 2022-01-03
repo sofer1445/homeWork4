@@ -306,6 +306,10 @@ public class RealEstate {
                         System.out.println("Which property you want to remove?");
                         int locationOfTheRemovedProperty = scanner.nextInt();
                         Property[] newArrayProperty = removeProperty(property[locationOfTheRemovedProperty-1]);
+                        for (int k = 0; k < newArrayProperty.length; k++) {
+                            System.out.print(newArrayProperty[k].toString());
+                        }
+
                     }
                 }
                 }
@@ -324,13 +328,12 @@ public class RealEstate {
         }
         public Property[] removeProperty (Property index){
            Property[] newProperty = new Property[property.length-1];
+           int counter =0;
         for (int i = 0; i < property.length; i++) {
-            for (int j = 0; j < property.length; j++) {
-                if(property[j] != index){
-                  newProperty[i] = property[j];
+                if(property[i] != index){
+                  newProperty[counter] = property[i];
+                  counter++;
               }
-
-            }
         }return newProperty;
 
 
