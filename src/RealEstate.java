@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class RealEstate {
     Scanner scanner = new Scanner(System.in);
     public int maximumOptions = 11;
-    public int aNumberOfActualOptions = 1;
 
     private User[] users;
     private Property[] property;
@@ -19,6 +18,7 @@ public class RealEstate {
 
     public void createUser() {
         boolean typeUser;
+        int numberOfPublications=0;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a username");
         String userName = scanner.nextLine();
@@ -52,11 +52,14 @@ public class RealEstate {
         int type = scanner.nextInt();
         if (type == 1) {
             typeUser = true;
+            numberOfPublications = 10;
+
         } else {
             typeUser = false;
+            numberOfPublications = 3;
         }
         typeUser = realtorOrRegular(typeUser);
-        addUserToArray(userName, password, number, typeUser);
+        addUserToArray(userName, password, number, typeUser,numberOfPublications);
 
     }
 
@@ -73,12 +76,12 @@ public class RealEstate {
         return checkAvailability;
     }
 
-    private void addUserToArray(String username, String password, String number, boolean typeUser) {
+    private void addUserToArray(String username, String password, String number, boolean typeUser , int numberOfPublications) {
         User[] newArray = new User[this.users.length + 1];
         for (int i = 0; i < this.users.length; i++) {
             newArray[i] = this.users[i];
         }
-        User userToAdd = new User(username, password, number, typeUser);
+        User userToAdd = new User(username, password, number, typeUser , numberOfPublications);
         newArray[this.users.length] = userToAdd;
         this.users = newArray;
 
@@ -157,15 +160,10 @@ public class RealEstate {
         boolean mayPublish = false;
         String[] cityName = new String[10];
         String counter = "null";
-        int numberOfAssets;
+        int numberOfAssets=0;
         for (int i = 0; i < users.length; i++) {
             boolean type = users[i].getTypeUser();
-            mayPublish = realtorOrRegular(type);
-        }
-        if (mayPublish) {
-            numberOfAssets = maximumOptions;
-        } else {
-            numberOfAssets = maximumOptions - 7;
+            numberOfAssets = users[i].getNumberOfPublications();
         }
         if (numberOfAssets > 0) {
             address();
@@ -201,8 +199,6 @@ public class RealEstate {
             }
             Address address = new Address(cityNameTwo , streetName);
             boolean answerOfAdvertisingSuccess = propertyType(user, address);
-            maximumOptions--;
-            aNumberOfActualOptions++;
 //התוכנית חוזרת להתחלה , צריך לשנות את זה שיחזור לתפריט 1-6
 
             return true;
@@ -264,6 +260,7 @@ public class RealEstate {
         System.out.println("What is the property value?");
         float price = scanner.nextInt();
         addPropertyToArray(user, address, typeOfProperty, floorProperty, manyRooms, houseNumber, forSale, price);
+        user.setNumberOfPublications(user.getNumberOfPublications()-1);
         return true;
 
 
@@ -284,22 +281,38 @@ public class RealEstate {
 
     public void removeProperty(User user) {
         Scanner scanner = new Scanner(System.in);
-        for (int i = 0; i < property.length; i++) {
-            User currentUser = property[i].getUser();
-            if (i >= property.length - 1 && !property[i].getUser().equals(user)) {//מופיע הדפסה של זה במקרה שיש שני משתמשים והראשון רוצה להסיר נכס למרות שיש לו
-                System.out.println("To user there is no property in the system");
+
+        for (int i = 0; i < users.length; i++) {
+            User userAvailable = users[i];
+            int counter = 1;
+            if (property.length == 0) {
+                System.out.println("To user there is no property in the system.");
                 break;
             }
-            if (currentUser == user) {
-                aNumberOfActualOptions--;
-                System.out.println("Your property by order: " + (aNumberOfActualOptions));
-                System.out.print(property[i].toString());
+            if (i < property.length) {
+
+                User currentUser = property[i].getUser();
+                if (!property[i].getUser().equals(user) && i > userAvailable.getNumberOfPublications()) {//מופיע הדפסה של זה במקרה שיש שני משתמשים והראשון רוצה להסיר נכס למרות שיש לו
+                    System.out.println("To user there is no property in the system");
+                    break;
+                }
+                if (currentUser == user) {
+
+                    for (int j = 0; j < property.length; j++) {
+                        System.out.println("Your property by order: " + counter);
+                        counter++;
+                    System.out.print(property[j].toString());
+                    if(j >= property.length-1){
+                        System.out.println("Which property you want to remove?");
+                        int locationOfTheRemovedProperty = scanner.nextInt();
+                        Property[] newArrayProperty = removeProperty(property[locationOfTheRemovedProperty-1]);
+                    }
+                }
+                }
             }
+
         }
-        if (property.length == 0) {
-            System.out.println("To user there is no property in the system.");
-        }
-        System.out.println("Which property you want to remove?");
+
 //        int numberOfProperty =  scanner.nextInt();
 //        for (int i = 0; i < property.length ; i++) {
 //            Address listProperty = property[i].getAddress();
@@ -309,8 +322,20 @@ public class RealEstate {
            // }
 
         }
+        public Property[] removeProperty (Property index){
+           Property[] newProperty = new Property[property.length-1];
+        for (int i = 0; i < property.length; i++) {
+            for (int j = 0; j < property.length; j++) {
+                if(property[j] != index){
+                  newProperty[i] = property[j];
+              }
+
+            }
+        }return newProperty;
+
 
     }
+}
 
 
 
