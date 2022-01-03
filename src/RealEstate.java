@@ -191,14 +191,7 @@ public class RealEstate {
                 return false;
             }
             System.out.println("Here is a list of the streets available in the city");
-            for (int i = 0; i < address.length;i++) {
-                do {
-                    if(Objects.equals(address[i].getCityName(), cityNameTwo)) {
-                        System.out.println(address[i].getStreetName());
-                        i++;
-                    }
-                } while (i != address.length && cityNameTwo.equals(address[i].getCityName()));
-            }
+            listAddress(cityNameTwo);
             System.out.println("Choose a street name");
             String streetName = scanner.nextLine();
             streetName = streetName.toLowerCase(Locale.ROOT);
@@ -238,29 +231,16 @@ public class RealEstate {
 
     }
 
-//    public void listAddress(String address) {
-//        if (address.equals("ashkelon")) {
-//            System.out.println("""
-//                    tabeln
-//                    narkis
-//                    ali cohen
-//                    """);
-//        }
-//        if (address.equals("beer sheva")) {
-//            System.out.println("""
-//                    ben gorion
-//                    dror
-//                    kasesh
-//                    """);
-//        }
-//        if (address.equals("tel aviv")) {
-//            System.out.println("""
-//                    ben gorion
-//                    hagana
-//                    bograshov
-//                    """);
-//        }
-//    }
+   public void listAddress(String cityNameTwo) {
+        for (int i = 0; i < address.length;i++) {
+        do {
+            if(Objects.equals(address[i].getCityName(), cityNameTwo)) {
+                System.out.println(address[i].getStreetName());
+                i++;
+            }
+        } while (i != address.length && cityNameTwo.equals(address[i].getCityName()));
+    }
+   }
 
     public boolean propertyType(User user) {
         Scanner scanner = new Scanner(System.in);
@@ -311,7 +291,7 @@ public class RealEstate {
     public void removeProperty(User user){
         for (int i = 0; i < property.length; i++) {
             User currentUser = property[i].getUser();
-            if(!property[i].getUser().equals(user) && i == property.length-1){
+            if(i >= property.length-1 && !property[i].getUser().equals(user) ){//מופיע הדפסה של זה במקרה שיש שני משתמשים והראשון רוצה להסיר נכס למרות שיש לו
                System.out.println("To user there is no property in the system");
                break;
             }
