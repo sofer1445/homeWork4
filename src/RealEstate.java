@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class RealEstate {
     Scanner scanner = new Scanner(System.in);
-
+    public int delCounter = 1;
     private User[] users;
     private Property[] property;
     private Address[] address;
@@ -280,7 +280,6 @@ public class RealEstate {
 
     public void removeProperty(User user) {
         Scanner scanner = new Scanner(System.in);
-        int delCounter = 1;
         int locationOfTheRemovedProperty = 0;
         for (int i = 0; i < users.length; i++) {
             User userAvailable = users[i];
@@ -289,7 +288,7 @@ public class RealEstate {
                 System.out.println("To user there is no property in the system.");
                 break;
             }
-            if (i < property.length) {
+            if (i < property.length ^ property[i] == null) {
 
                 User currentUser = property[i].getUser();
                 if (!property[i].getUser().equals(user) && i > userAvailable.getNumberOfPublications()) {//מופיע הדפסה של זה במקרה שיש שני משתמשים והראשון רוצה להסיר נכס למרות שיש לו
@@ -322,18 +321,10 @@ public class RealEstate {
 
         }
         property[locationOfTheRemovedProperty] = null;
-        user.setNumberOfPublications(user.getNumberOfPublications() + 1);
-        System.out.println("property deleted");
-        for (int j = 0; j < property.length; j++) {
-            if (property[j] == null) {
-                delCounter++;
-                if (delCounter == property.length) {
-                    break;
+        System.out.println("property deleted" );
 
-                }
-            }
         }
-    }
+
         public Property[] removePropertyFromArray (Property index){
            Property[] newProperty = new Property[property.length-1];
            int counter =0;
@@ -346,7 +337,9 @@ public class RealEstate {
 
 
     }
+
 }
+
 
 
 

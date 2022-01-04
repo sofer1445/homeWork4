@@ -42,7 +42,7 @@ public class Main {
                                 realEstate.removeProperty(logain);
                                 break;
                             case printAllProperties:
-                                realEstate.printAllProperties();
+                                //realEstate.printAllProperties();
                                 break;
                             case getPrintAllPropertiesByUser:
                                 break;
