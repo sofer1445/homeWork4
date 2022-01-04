@@ -240,7 +240,7 @@ public class RealEstate {
                 Type your options :
                 standard apartment
                 penthouse apartment
-                private home
+                private house
                 """);
         String typeOfProperty = scanner.nextLine();
         boolean forSale = false;
@@ -345,16 +345,16 @@ public class RealEstate {
     public void printAllProperties() {
         System.out.println("Here is a list of all the assets in the system");
         for (int i = 0; i < property.length; i++) {
-           System.out.println(property[i].toString());
+            System.out.println(property[i].toString());
         }
     }
 
     public void printAllPropertiesByUser(User user) {
         System.out.println("Here is the list of property of an account:" + user.getUsername());
         for (int i = 0; i < property.length; i++) {
-          if(property[i].getUser().equals(user)) {
-              System.out.println(property[i].toString());
-          }
+            if (property[i].getUser().equals(user)) {
+                System.out.println(property[i].toString());
+            }
         }
     }
 
@@ -364,15 +364,17 @@ public class RealEstate {
         System.out.println("To search for a property, please answer the following questions. If the question is irrelevant please press -999");
         System.out.println("Is the property for rent or for sale?");
         String isSaleOrRent = scanner.nextLine();
-        if(Objects.equals(isSaleOrRent, "sale")){
+        if (Objects.equals(isSaleOrRent, "sale")) {
             isSale = true;
+
         }
         System.out.println("""
                 What is the type of property you want?
                 Type your options :
                                 standard apartment
                                 penthouse apartment
-                                private home""");
+                                private house""");
+
         String type = scanner.nextLine();
         System.out.println("What is the desired number of rooms?");
         int numberOfRooms = scanner.nextInt();
@@ -397,14 +399,17 @@ public class RealEstate {
                 searchProperty = new Property[forProperty];
                 for (int i = 0; i < searchProperty.length; i++) {
                     searchProperty[j] = property[j];
-                    System.out.println(searchProperty[j]);
                 }
+            }else {
+                //if (searchProperty[j] == null) {
+                System.out.println("there is no property.");
             }
+
+
         }
         return searchProperty;
+
     }
-
-
 }
 
 

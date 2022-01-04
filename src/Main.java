@@ -1,13 +1,14 @@
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Scanner;
 
 public class Main {
-    private static final int postNewProperty = 1 ;
-    private static final int removeProperty = 2 ;
-    private static final int printAllProperties = 3;
-    private static final int getPrintAllPropertiesByUser = 4;
-    private static final int searchProperty = 5 ;
-    private static final int endProgram = 6 ;
+    private static final int POST_NEW_PROPERTY = 1 ;
+    private static final int REMOVE_PROPERTY = 2 ;
+    private static final int PRINT_ALL_PROPERTIES = 3 ;
+    private static final int GET_PRINT_ALL_PROPERTIES_BY_USER = 4 ;
+    private static final int SEARCH_PROPERTY = 5 ;
+    private static final int END_PROGRAM  = 6 ;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -35,22 +36,25 @@ public class Main {
                     do {
                         userSelection2 = internalMenu();
                         switch (userSelection2) {
-                            case postNewProperty:
+                            case POST_NEW_PROPERTY:
                                 realEstate.postNewProperty(logain);
                                 break;
-                            case removeProperty:
+                            case REMOVE_PROPERTY:
                                 realEstate.removeProperty(logain);
                                 break;
-                            case printAllProperties:
+                            case PRINT_ALL_PROPERTIES:
                                 realEstate.printAllProperties();
                                 break;
-                            case getPrintAllPropertiesByUser:
+                            case GET_PRINT_ALL_PROPERTIES_BY_USER:
                                 realEstate.printAllPropertiesByUser(logain);
                                 break;
-                            case searchProperty:
-                                realEstate.search();
+                            case SEARCH_PROPERTY:
+                                Property[] printProperties = realEstate.search();
+                                for (int i = 1; i < printProperties.length; i++) {
+                                    System.out.println(printProperties[i]);
+                                }
                                 break;
-                            case endProgram:
+                            case END_PROGRAM:
                                 break;
                         }
                     } while (userSelection2 != 6 );

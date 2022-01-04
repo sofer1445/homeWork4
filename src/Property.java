@@ -87,8 +87,8 @@ public class Property {
 
     @Override
     public String toString() {
-        return   this.typeProperty + "- for Sale : " + this.forSale + " Number Rooms  " + this.numberRooms  + ", Floor Number :" + this.floorNumber + ".\n"+
-                "Price : " + this.price + "$.\n" + address.toString()+ "\n"+
+        return   this.typeProperty + "- for Sale: " + this.forSale + " Number Rooms: " + this.numberRooms  + ", Floor Number :" + this.floorNumber + ".\n"+
+                "Price: " + this.price + "$.\n" + address.toString()+ "\n"+
                 "Contact info: " + user.toString()  + "\n" +
                 '}' + "\n" ;
     }
