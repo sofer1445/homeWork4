@@ -2,6 +2,12 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 public class Main {
+    private static final int postNewProperty = 1 ;
+    private static final int removeProperty = 2 ;
+    private static final int printAllProperties = 3;
+    private static final int getPrintAllPropertiesByUser = 4;
+    private static final int searchProperty = 5 ;
+    private static final int endProgram = 6 ;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -29,19 +35,20 @@ public class Main {
                     do {
                         userSelection2 = internalMenu();
                         switch (userSelection2) {
-                            case 1: //לשנות לשמות משמעותים
+                            case postNewProperty:
                                 realEstate.postNewProperty(logain);
                                 break;
-                            case 2:
+                            case removeProperty:
                                 realEstate.removeProperty(logain);
                                 break;
-                            case 3:
+                            case printAllProperties:
+                                realEstate.printAllProperties();
                                 break;
-                            case 4:
+                            case getPrintAllPropertiesByUser:
                                 break;
-                            case 5:
+                            case searchProperty:
                                 break;
-                            case 6:
+                            case endProgram:
                                 break;
                         }
                     } while (userSelection2 != 6 );
