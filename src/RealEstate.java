@@ -17,7 +17,7 @@ public class RealEstate {
 
     public void createUser() {
         boolean typeUser;
-        int numberOfPublications=0;
+        int numberOfPublications = 0;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a username");
         String userName = scanner.nextLine();
@@ -58,7 +58,7 @@ public class RealEstate {
             numberOfPublications = 3;
         }
         typeUser = realtorOrRegular(typeUser);
-        addUserToArray(userName, password, number, typeUser,numberOfPublications);
+        addUserToArray(userName, password, number, typeUser, numberOfPublications);
 
     }
 
@@ -75,12 +75,12 @@ public class RealEstate {
         return checkAvailability;
     }
 
-    private void addUserToArray(String username, String password, String number, boolean typeUser , int numberOfPublications) {
+    private void addUserToArray(String username, String password, String number, boolean typeUser, int numberOfPublications) {
         User[] newArray = new User[this.users.length + 1];
         for (int i = 0; i < this.users.length; i++) {
             newArray[i] = this.users[i];
         }
-        User userToAdd = new User(username, password, number, typeUser , numberOfPublications);
+        User userToAdd = new User(username, password, number, typeUser, numberOfPublications);
         newArray[this.users.length] = userToAdd;
         this.users = newArray;
 
@@ -159,7 +159,7 @@ public class RealEstate {
         boolean mayPublish = false;
         String[] cityName = new String[10];
         String counter = "null";
-        int numberOfAssets=0;
+        int numberOfAssets = 0;
         for (int i = 0; i < users.length; i++) {
             boolean type = users[i].getTypeUser();
             numberOfAssets = users[i].getNumberOfPublications();
@@ -196,7 +196,7 @@ public class RealEstate {
                     }
                 }
             }
-            Address address = new Address(cityNameTwo , streetName);
+            Address address = new Address(cityNameTwo, streetName);
             boolean answerOfAdvertisingSuccess = propertyType(user, address);
 //התוכנית חוזרת להתחלה , צריך לשנות את זה שיחזור לתפריט 1-6
 
@@ -212,7 +212,7 @@ public class RealEstate {
         address[1] = new Address("beer sheva", "dror");
         address[2] = new Address("beer sheva", "golda meir");
         address[3] = new Address("beer sheva", "kadesh");
-        address[4] = new Address("tel aviv", "ben gurion");
+        address[4] = new Address("tel aviv", "ibn gabirol");
         address[5] = new Address("tel aviv", "haagana");
         address[6] = new Address("tel aviv", "bograshov");
         address[7] = new Address("ashkelon", "tabeln");
@@ -239,7 +239,7 @@ public class RealEstate {
                 2 - for a penthouse apartment in an apartment building,
                 3 - For a private home.
                 Select options 1 to 3""");
-        int typeOfProperty = scanner.nextInt();
+        String typeOfProperty = scanner.nextLine();
         boolean forSale = false;
         System.out.println("What floor property?\n" +
                 "(If private house enter the digit 0)");
@@ -259,19 +259,19 @@ public class RealEstate {
         System.out.println("What is the property value?");
         float price = scanner.nextInt();
         addPropertyToArray(user, address, typeOfProperty, floorProperty, manyRooms, houseNumber, forSale, price);
-        user.setNumberOfPublications(user.getNumberOfPublications()-1);
+        user.setNumberOfPublications(user.getNumberOfPublications() - 1);
         return true;
 
 
     }
 
 
-    private void addPropertyToArray(User user, Address address, int typeOfProperty, int floorProperty, int manyRooms, int houseNumber, boolean forSale, float price) {
+    private void addPropertyToArray(User user, Address address, String typeOfProperty, int floorProperty, int manyRooms, int houseNumber, boolean forSale, float price) {
         Property[] newArrayOfProperty = new Property[this.property.length + 1];
         for (int i = 0; i < this.property.length; i++) {
             newArrayOfProperty[i] = this.property[i];
         }
-        Property propertyToAdd = new Property(user,address, typeOfProperty, manyRooms, price, forSale, houseNumber, floorProperty);
+        Property propertyToAdd = new Property(user, address, typeOfProperty, manyRooms, price, forSale, houseNumber, floorProperty);
         newArrayOfProperty[this.property.length] = propertyToAdd;
         this.property = newArrayOfProperty;
 
@@ -321,22 +321,61 @@ public class RealEstate {
 
         }
         property[locationOfTheRemovedProperty] = null;
-        System.out.println("property deleted" );
+        System.out.println("property deleted");
 
-        }
+    }
 
-        public Property[] removePropertyFromArray (Property index){
-           Property[] newProperty = new Property[property.length-1];
-           int counter =0;
+    public Property[] removePropertyFromArray(Property index) {
+        Property[] newProperty = new Property[property.length - 1];
+        int counter = 0;
         for (int i = 0; i < property.length; i++) {
-                if(property[i] != index){
-                  newProperty[counter] = property[i];
-                  counter++;
-              }
-        }return newProperty;
+            if (property[i] != index) {
+                newProperty[counter] = property[i];
+                counter++;
+            }
+        }
+        return newProperty;
 
 
     }
+
+    public void printAllProperties() {
+        // כל הנכסים במערכת
+    }
+
+    public void printAllPropertiesByUser() {
+
+    }
+
+    public Property[] search() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("To search for a property, please answer the following questions. If the question is irrelevant please press -999");
+        System.out.println("Is the property for rent or for sale?");
+        boolean isSale = scanner.hasNext();
+        System.out.println("What is the type of property you want?");
+        String type = scanner.nextLine();
+        System.out.println("What is the desired number of rooms?");
+        int numberOfRooms = scanner.nextInt();
+        System.out.println("What is the minimum price range?");
+        int minimum = scanner.nextInt();
+        System.out.println("What is the maximum price range?");
+        int maximum = scanner.nextInt();
+        int searchForProperty = 0;
+        Property[] searchProperty = new Property[0];
+        for (int j = 0; j < property.length; j++) {
+            if ((property[j].isForSale() == isSale) && (property[j].getTypeProperty()).equals(type) || Objects.equals(type, -999) &&
+                    (property[j].getNumberRooms() == numberOfRooms || (numberOfRooms == -999)) &&
+                    (property[j].getPrice() > minimum || (minimum == -999) && property[j].getPrice() < maximum || (minimum == -999))) {
+                searchForProperty++;
+                searchProperty = new Property[searchForProperty];
+                for (int i = 0; i < searchProperty.length; i++) {
+                    searchProperty[j] = property[j];
+                }
+            }
+        }
+        return searchProperty;
+    }
+
 
 }
 

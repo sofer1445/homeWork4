@@ -3,13 +3,13 @@ public class Property {
     private Address address;
     private int numberRooms;
     private float price;
-    private int typeProperty;
+    private String typeProperty;
     private boolean forSale;
     private int houseNumber;
     private int floorNumber;
     private User user;
 
-    public Property(User user, Address address, int typeProperty, int numberRooms , float price , boolean forSale, int houseNumber , int floorNumber){
+    public Property(User user, Address address, String typeProperty, int numberRooms , float price , boolean forSale, int houseNumber , int floorNumber){
         this.address = address;
         this.numberRooms = numberRooms;
         this.price = price;
@@ -33,7 +33,7 @@ public class Property {
         return price;
     }
 
-    public int getTypeProperty() {
+    public String getTypeProperty() {
         return typeProperty;
     }
 
@@ -65,7 +65,7 @@ public class Property {
         this.price = price;
     }
 
-    public void setTypeProperty(int typeProperty) {
+    public void setTypeProperty(String typeProperty) {
         this.typeProperty = typeProperty;
     }
 

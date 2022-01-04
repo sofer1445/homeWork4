@@ -42,11 +42,13 @@ public class Main {
                                 realEstate.removeProperty(logain);
                                 break;
                             case printAllProperties:
-                                //realEstate.printAllProperties();
+                                realEstate.printAllProperties();
                                 break;
                             case getPrintAllPropertiesByUser:
+                                realEstate.printAllPropertiesByUser();
                                 break;
                             case searchProperty:
+                                realEstate.search();
                                 break;
                             case endProgram:
                                 break;
