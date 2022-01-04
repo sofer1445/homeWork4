@@ -50,8 +50,8 @@ public class User {
     }
 
     public String toString () {
-        return "Full name : " + this.getUsername() + "\n" +
-            "Phone number : " + this.number ;
+        return this.getUsername()+" " + this.number ;
+
 
     }
 }

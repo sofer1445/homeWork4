@@ -198,7 +198,6 @@ public class RealEstate {
             }
             Address address = new Address(cityNameTwo, streetName);
             boolean answerOfAdvertisingSuccess = propertyType(user, address);
-//התוכנית חוזרת להתחלה , צריך לשנות את זה שיחזור לתפריט 1-6
 
             return true;
         }
@@ -238,7 +237,11 @@ public class RealEstate {
                 1 - for a standard apartment in an apartment building,
                 2 - for a penthouse apartment in an apartment building,
                 3 - For a private home.
-                Select options 1 to 3""");
+                Type your options :
+                standard apartment
+                penthouse apartment
+                private home
+                """);
         String typeOfProperty = scanner.nextLine();
         boolean forSale = false;
         System.out.println("What floor property?\n" +
@@ -340,19 +343,36 @@ public class RealEstate {
     }
 
     public void printAllProperties() {
-        // כל הנכסים במערכת
+        System.out.println("Here is a list of all the assets in the system");
+        for (int i = 0; i < property.length; i++) {
+           System.out.println(property[i].toString());
+        }
     }
 
-    public void printAllPropertiesByUser() {
-
+    public void printAllPropertiesByUser(User user) {
+        System.out.println("Here is the list of property of an account:" + user.getUsername());
+        for (int i = 0; i < property.length; i++) {
+          if(property[i].getUser().equals(user)) {
+              System.out.println(property[i].toString());
+          }
+        }
     }
 
     public Property[] search() {
         Scanner scanner = new Scanner(System.in);
+        boolean isSale = false;
         System.out.println("To search for a property, please answer the following questions. If the question is irrelevant please press -999");
         System.out.println("Is the property for rent or for sale?");
-        boolean isSale = scanner.hasNext();
-        System.out.println("What is the type of property you want?");
+        String isSaleOrRent = scanner.nextLine();
+        if(Objects.equals(isSaleOrRent, "sale")){
+            isSale = true;
+        }
+        System.out.println("""
+                What is the type of property you want?
+                Type your options :
+                                standard apartment
+                                penthouse apartment
+                                private home""");
         String type = scanner.nextLine();
         System.out.println("What is the desired number of rooms?");
         int numberOfRooms = scanner.nextInt();
@@ -360,16 +380,24 @@ public class RealEstate {
         int minimum = scanner.nextInt();
         System.out.println("What is the maximum price range?");
         int maximum = scanner.nextInt();
-        int searchForProperty = 0;
+        int forProperty = 0;
         Property[] searchProperty = new Property[0];
+//        searchProperty = property;
+//        for (int i = 0; i < property.length; i++) {
+//            if(property[i].isForSale() == isSale){
+//                searchProperty[i] = property[i];
+//            }
+//
+//        }
         for (int j = 0; j < property.length; j++) {
             if ((property[j].isForSale() == isSale) && (property[j].getTypeProperty()).equals(type) || Objects.equals(type, -999) &&
                     (property[j].getNumberRooms() == numberOfRooms || (numberOfRooms == -999)) &&
                     (property[j].getPrice() > minimum || (minimum == -999) && property[j].getPrice() < maximum || (minimum == -999))) {
-                searchForProperty++;
-                searchProperty = new Property[searchForProperty];
+                forProperty++;
+                searchProperty = new Property[forProperty];
                 for (int i = 0; i < searchProperty.length; i++) {
                     searchProperty[j] = property[j];
+                    System.out.println(searchProperty[j]);
                 }
             }
         }

@@ -87,15 +87,9 @@ public class Property {
 
     @Override
     public String toString() {
-        return "User Information : "  + "\n" + user.toString()  + "\n" +
-                address.toString()+ "\n"+
-                "Property {" + "\n" +
-                "Type Property : " + this.typeProperty + "\n" +
-                "for Sale : " + this.forSale +  "\n" +
-                "House Number : " +this.houseNumber + "\n" +
-                "Floor Number :" + this.floorNumber  + "\n" +
-                "Number Rooms : " + this.numberRooms  + "\n" +
-                "Price : " + this.price + "\n" +
+        return   this.typeProperty + "- for Sale : " + this.forSale + " Number Rooms  " + this.numberRooms  + ", Floor Number :" + this.floorNumber + ".\n"+
+                "Price : " + this.price + "$.\n" + address.toString()+ "\n"+
+                "Contact info: " + user.toString()  + "\n" +
                 '}' + "\n" ;
     }
 }

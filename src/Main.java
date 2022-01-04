@@ -45,7 +45,7 @@ public class Main {
                                 realEstate.printAllProperties();
                                 break;
                             case getPrintAllPropertiesByUser:
-                                realEstate.printAllPropertiesByUser();
+                                realEstate.printAllPropertiesByUser(logain);
                                 break;
                             case searchProperty:
                                 realEstate.search();
