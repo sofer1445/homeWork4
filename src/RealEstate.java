@@ -19,19 +19,19 @@ public class RealEstate {
         boolean typeUser;
         int numberOfPublications = 0;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Choose a username");
+        System.out.println("Choose a username:");
         String userName = scanner.nextLine();
         boolean checkAvailability = userAvailability(userName);
         while (!checkAvailability) {
-            System.out.println("Existing system user Try again");
+            System.out.println("Existing system user, Try again.");
             userName = scanner.nextLine();
             checkAvailability = userAvailability(userName);
         }
-        System.out.println("type a password ");
+        System.out.println("Type a password:");
         String password = scanner.nextLine();
         boolean PasswordStrengthCheck = passwordCheck(password);
         while (!PasswordStrengthCheck) {
-            System.out.println("Weak password try again");
+            System.out.println("Weak password, please try again.");
             password = scanner.nextLine();
             PasswordStrengthCheck = passwordCheck(password);
 
@@ -40,7 +40,7 @@ public class RealEstate {
         String number = scanner.nextLine();
         boolean phoneNumber = phoneNumberCheck(number);
         while (!phoneNumber) {
-            System.out.println("Wrong phone number, please try again");
+            System.out.println("Wrong phone number, please try again.");
             number = scanner.nextLine();
             phoneNumber = phoneNumberCheck(number);
         }
@@ -97,7 +97,6 @@ public class RealEstate {
                 }
                 if (password.charAt(j) <= '9') {
                     counterNumber++;
-
                 }
                 if (counterNumber >= 1 && counterTav >= 1) {
                     return true;
@@ -129,9 +128,9 @@ public class RealEstate {
 
     public User userLogin() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter a username");
+        System.out.println("Please enter a username:");
         String userName = scanner.nextLine();
-        System.out.println("Type a password");
+        System.out.println("Type a password:");
         String password = scanner.nextLine();
         User user = checkInArrayUser(userName, password);
         if (user != null) {
@@ -185,7 +184,7 @@ public class RealEstate {
             }
             System.out.println("Here is a list of the streets available in the city");
             listAddress(cityNameTwo);
-            System.out.println("Choose a street name");
+            System.out.println("Choose a street name:");
             String streetName = scanner.nextLine();
             streetName = streetName.toLowerCase(Locale.ROOT);
             for (int i = 0; i < address.length; i++) {
@@ -294,7 +293,7 @@ public class RealEstate {
             if (i < property.length ^ property[i] == null) {
 
                 User currentUser = property[i].getUser();
-                if (!property[i].getUser().equals(user) && i > userAvailable.getNumberOfPublications()) {//מופיע הדפסה של זה במקרה שיש שני משתמשים והראשון רוצה להסיר נכס למרות שיש לו
+                if (!property[i].getUser().equals(user) && i > userAvailable.getNumberOfPublications()) {
                     System.out.println("To user there is no property in the system");
                     break;
                 }
@@ -313,9 +312,6 @@ public class RealEstate {
                             System.out.println("Which property you want to remove?");
                             locationOfTheRemovedProperty = scanner.nextInt();
                             Property[] newArrayProperty = removePropertyFromArray(property[locationOfTheRemovedProperty - 1]);
-                            for (int k = 0; k < newArrayProperty.length; k++) {
-                                System.out.print(newArrayProperty[k].toString());
-                            }
                         }
                     }
                     break;
@@ -324,7 +320,7 @@ public class RealEstate {
 
         }
         property[locationOfTheRemovedProperty] = null;
-        System.out.println("property deleted");
+        System.out.println("property deleted.");
 
     }
 
@@ -350,17 +346,27 @@ public class RealEstate {
     }
 
     public void printAllPropertiesByUser(User user) {
-        System.out.println("Here is the list of property of an account:" + user.getUsername());
-        for (int i = 0; i < property.length; i++) {
-            if (property[i].getUser().equals(user)) {
-                System.out.println(property[i].toString());
+        if (property.length > 0) {
+            for (int i = 0; i < property.length; i++) {
+                if (property[i] != null) {
+                    System.out.println("There are no property in the system. ");
+                    break;
+                }
+                if (property[i].getUser().equals(user)) {
+                    System.out.println("Here is the list of property of an account:" + user.getUsername());
+                    System.out.println(property[i].toString());
+                }
             }
+        } else {
+            System.out.println("There are no property in the system.");
         }
     }
 
     public Property[] search() {
         Scanner scanner = new Scanner(System.in);
         boolean isSale = false;
+        Property[] firstArray = new Property[property.length];
+        Property[] secondArray = new Property[property.length];
         System.out.println("To search for a property, please answer the following questions. If the question is irrelevant please press -999");
         System.out.println("Is the property for rent or for sale?");
         String isSaleOrRent = scanner.nextLine();
@@ -391,23 +397,43 @@ public class RealEstate {
 //            }
 //
 //        }
-        for (int j = 0; j < property.length; j++) {
-            if ((property[j].isForSale() == isSale) && (property[j].getTypeProperty()).equals(type) || Objects.equals(type, -999) &&
-                    (property[j].getNumberRooms() == numberOfRooms || (numberOfRooms == -999)) &&
-                    (property[j].getPrice() > minimum || (minimum == -999) && property[j].getPrice() < maximum || (minimum == -999))) {
-                forProperty++;
-                searchProperty = new Property[forProperty];
-                for (int i = 0; i < searchProperty.length; i++) {
-                    searchProperty[j] = property[j];
-                }
-            }else {
-                //if (searchProperty[j] == null) {
-                System.out.println("there is no property.");
-            }
+        for (int i = 0; i < property.length; i++) {
+           if(property[i].isForSale() == isSale) {
+               firstArray[i] = property[i];
+               firstArray[i].setForSale(isSale);
+           }
+               if(property[i].isForSale() != isSale){
+                   firstArray[i] = property[i];
+               }
+//           if(firstArray[i].getNumberRooms() != numberOfRooms)
+               if (numberOfRooms == -999) {
+                   secondArray[i] = firstArray[i];
+               }
+               else {
+               secondArray[i] = firstArray[i];
+           }
+           if(secondArray[i].getPrice()  == -999.0 ||  ( secondArray[i].getPrice() > minimum || secondArray[i].getPrice() < maximum ) ){
+              firstArray[i] = secondArray[i];
 
+
+           }
 
         }
-        return searchProperty;
+
+//        for (int j = 0; j < property.length; j++) {
+//            if ((property[j].isForSale() == isSale) && (property[j].getTypeProperty()).equals(type) || Objects.equals(type, -999) &&
+//                    (property[j].getNumberRooms() == numberOfRooms || (numberOfRooms == -999)) &&
+//                    (property[j].getPrice() > minimum || (minimum == -999) && property[j].getPrice() < maximum || (minimum == -999))) {
+//
+//                searchProperty = new Property[forProperty];
+//                for (int i = 0; i < searchProperty.length; i++) {
+//                    searchProperty[i] = property[i];
+//                }
+//            }
+//
+//
+//        }
+        return firstArray;
 
     }
 }

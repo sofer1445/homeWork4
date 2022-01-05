@@ -50,7 +50,7 @@ public class Main {
                                 break;
                             case SEARCH_PROPERTY:
                                 Property[] printProperties = realEstate.search();
-                                for (int i = 1; i < printProperties.length; i++) {
+                                for (int i = 0 ; i < printProperties.length ; i ++) {
                                     System.out.println(printProperties[i]);
                                 }
                                 break;
