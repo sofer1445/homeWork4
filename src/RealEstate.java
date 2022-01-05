@@ -2,13 +2,14 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
 
+
 public class RealEstate {
+    Scanner scanner = new Scanner(System.in);
     private static final int NO_FILTER = -999;
     private static final int NUMBER_OF_REALTOR_PROPERTY = 10;
     private static final int NUMBER_OF_REGULAR_PROPERTY = 3;
-    private static final int ARRAY_SIZE_ADDRESS = 10 ;
-    private static final int ARRAY_SIZE = 0 ;
-    Scanner scanner = new Scanner(System.in);
+    private static final int ARRAY_SIZE_ADDRESS = 10;
+    private static final int ARRAY_SIZE = 0;
     private User[] users;
     private Property[] property;
     private Address[] address;
@@ -306,7 +307,7 @@ public class RealEstate {
                             locationOfTheRemovedProperty = scanner.nextInt();
                             break;
                         }
-                        System.out.println("Your property by order: " + (counter-1));
+                        System.out.println("Your property by order: " + (counter - 1));
                         counter++;
                         System.out.print(property[j].toString());
                         if (j >= property.length - 1) {
@@ -319,10 +320,10 @@ public class RealEstate {
                 }
             }
         }
-        if (property.length == 0 ){
+        if (property.length == 0) {
             System.out.println("please enter property");
             postNewProperty(user);
-            return ;
+            return;
         }
         property[locationOfTheRemovedProperty] = null;
         System.out.println("property deleted.");
