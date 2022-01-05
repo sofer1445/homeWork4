@@ -306,7 +306,7 @@ public class RealEstate {
                             locationOfTheRemovedProperty = scanner.nextInt();
                             break;
                         }
-                        System.out.println("Your property by order: " + counter);
+                        System.out.println("Your property by order: " + (counter-1));
                         counter++;
                         System.out.print(property[j].toString());
                         if (j >= property.length - 1) {
@@ -318,7 +318,11 @@ public class RealEstate {
                     break;
                 }
             }
-
+        }
+        if (property.length == 0 ){
+            System.out.println("please enter property");
+            postNewProperty(user);
+            return ;
         }
         property[locationOfTheRemovedProperty] = null;
         System.out.println("property deleted.");
@@ -340,16 +344,21 @@ public class RealEstate {
     }
 
     public void printAllProperties() {
-        System.out.println("Here is a list of all the assets in the system");
-        for (int i = 0; i < property.length; i++) {
-            System.out.println(property[i].toString());
+        if (property.length == 0) {
+            System.out.println("There are no property in the system: ");
+        } else {
+            System.out.println("Here is a list of all the assets in the system");
+            for (int i = 0; i < property.length; i++) {
+                System.out.println(property[i].toString());
+            }
         }
     }
+
 
     public void printAllPropertiesByUser(User user) {
         if (property.length > 0) {
             for (int i = 0; i < property.length; i++) {
-                if (property[i] != null) {
+                if (property[i] == null) {
                     System.out.println("There are no property in the system. ");
                     break;
                 }
