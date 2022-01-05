@@ -26,8 +26,8 @@ public class Address {
         this.streetName = streetName;
     }
 
-    public String toString () {
+    public String toString() {
         return "City Name: " + this.getCityName() + "\n" +
-                "Street Name: " + this.getStreetName() + "\n" ;
+                "Street Name: " + this.getStreetName() + "\n";
     }
 }

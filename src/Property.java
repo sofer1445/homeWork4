@@ -9,7 +9,7 @@ public class Property {
     private int floorNumber;
     private User user;
 
-    public Property(User user, Address address, String typeProperty, int numberRooms , float price , boolean forSale, int houseNumber , int floorNumber){
+    public Property(User user, Address address, String typeProperty, int numberRooms, float price, boolean forSale, int houseNumber, int floorNumber) {
         this.address = address;
         this.numberRooms = numberRooms;
         this.price = price;
@@ -87,9 +87,9 @@ public class Property {
 
     @Override
     public String toString() {
-        return   this.typeProperty + "- for Sale: " + this.forSale + " Number Rooms: " + this.numberRooms  + ", Floor Number :" + this.floorNumber + ".\n"+
-                "Price: " + this.price + "$.\n" + address.toString()+ "\n"+
-                "Contact info: " + user.toString()  + "\n" +
-                '}' + "\n" ;
+        return this.typeProperty + "- for Sale: " + this.forSale + " Number Rooms: " + this.numberRooms + ", Floor Number :" + this.floorNumber + ".\n" +
+                "Price: " + this.price + "$.\n" + address.toString() + "\n" +
+                "Contact info: " + user.toString() + "\n" +
+                '}' + "\n";
     }
 }

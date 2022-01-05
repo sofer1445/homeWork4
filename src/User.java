@@ -6,7 +6,7 @@ public class User {
     private boolean typeUser;
     private int numberOfPublications;
 
-    public User(String username, String password , String number, boolean typeUser,int numberOfPublications) {
+    public User(String username, String password, String number, boolean typeUser, int numberOfPublications) {
         this.userName = username;
         this.password = password;
         this.typeUser = typeUser;
@@ -15,9 +15,10 @@ public class User {
     }
 
     public String setUserName(String userName) {
-      return this.userName;
+        return this.userName;
     }
-    public String getNumber (){
+
+    public String getNumber() {
         return this.number;
     }
 
@@ -49,8 +50,8 @@ public class User {
         this.numberOfPublications = numberOfPublications;
     }
 
-    public String toString () {
-        return this.getUsername()+" " + this.number ;
+    public String toString() {
+        return this.getUsername() + " " + this.number;
 
 
     }

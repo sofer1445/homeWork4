@@ -3,21 +3,26 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class RealEstate {
+    private static final int NO_FILTER = -999;
+    private static final int NUMBER_OF_REALTOR_PROPERTY = 10;
+    private static final int NUMBER_OF_REGULAR_PROPERTY = 3;
+    private static final int ARRAY_SIZE_ADDRESS = 10 ;
+    private static final int ARRAY_SIZE = 0 ;
     Scanner scanner = new Scanner(System.in);
-    public int delCounter = 1;
     private User[] users;
     private Property[] property;
     private Address[] address;
 
+
     public RealEstate() {
-        this.users = new User[0];
-        this.address = new Address[10];
-        this.property = new Property[0];
+        this.users = new User[ARRAY_SIZE];
+        this.address = new Address[ARRAY_SIZE_ADDRESS];
+        this.property = new Property[ARRAY_SIZE];
     }
 
     public void createUser() {
         boolean typeUser;
-        int numberOfPublications = 0;
+        int numberOfPublications;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a username:");
         String userName = scanner.nextLine();
@@ -34,7 +39,6 @@ public class RealEstate {
             System.out.println("Weak password, please try again.");
             password = scanner.nextLine();
             PasswordStrengthCheck = passwordCheck(password);
-
         }
         System.out.println("Enter your phone number: ");
         String number = scanner.nextLine();
@@ -51,18 +55,18 @@ public class RealEstate {
         int type = scanner.nextInt();
         if (type == 1) {
             typeUser = true;
-            numberOfPublications = 10;
+            numberOfPublications = NUMBER_OF_REALTOR_PROPERTY;
 
         } else {
             typeUser = false;
-            numberOfPublications = 3;
+            numberOfPublications = NUMBER_OF_REGULAR_PROPERTY;
         }
         typeUser = realtorOrRegular(typeUser);
         addUserToArray(userName, password, number, typeUser, numberOfPublications);
 
     }
 
-    public boolean userAvailability(String user) {
+    private boolean userAvailability(String user) {
         boolean checkAvailability = true;
         for (int i = 0; i < this.users.length; i++) {
             User currentUser = this.users[i];
@@ -149,14 +153,12 @@ public class RealEstate {
             }
         }
         return null;
-
-
     }
 
     public boolean postNewProperty(User user) {
         Scanner scanner = new Scanner(System.in);
         boolean mayPublish = false;
-        String[] cityName = new String[10];
+        String[] cityName = new String[ARRAY_SIZE_ADDRESS];
         String counter = "null";
         int numberOfAssets = 0;
         for (int i = 0; i < users.length; i++) {
@@ -204,7 +206,7 @@ public class RealEstate {
         return false;
     }
 
-    public void address() {
+    private void address() {
         Address[] addresses = new Address[this.address.length];
         address[0] = new Address("beer sheva", "ben gurion");
         address[1] = new Address("beer sheva", "dror");
@@ -218,7 +220,7 @@ public class RealEstate {
         address[9] = new Address("ashkelon", "ali cohen");
     }
 
-    public void listAddress(String cityNameTwo) {
+    private void listAddress(String cityNameTwo) {
         for (int i = 0; i < address.length; i++) {
             do {
                 if (Objects.equals(address[i].getCityName(), cityNameTwo)) {
@@ -229,7 +231,7 @@ public class RealEstate {
         }
     }
 
-    public boolean propertyType(User user, Address address) {
+    private boolean propertyType(User user, Address address) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("""
                 What is the type of property
@@ -266,7 +268,6 @@ public class RealEstate {
 
 
     }
-
 
     private void addPropertyToArray(User user, Address address, String typeOfProperty, int floorProperty, int manyRooms, int houseNumber, boolean forSale, float price) {
         Property[] newArrayOfProperty = new Property[this.property.length + 1];
@@ -324,7 +325,7 @@ public class RealEstate {
 
     }
 
-    public Property[] removePropertyFromArray(Property index) {
+    private Property[] removePropertyFromArray(Property index) {
         Property[] newProperty = new Property[property.length - 1];
         int counter = 0;
         for (int i = 0; i < property.length; i++) {
@@ -364,16 +365,9 @@ public class RealEstate {
 
     public Property[] search() {
         Scanner scanner = new Scanner(System.in);
-        boolean isSale = false;
-        Property[] firstArray = new Property[property.length];
-        Property[] secondArray = new Property[property.length];
         System.out.println("To search for a property, please answer the following questions. If the question is irrelevant please press -999");
         System.out.println("Is the property for rent or for sale?");
         String isSaleOrRent = scanner.nextLine();
-        if (Objects.equals(isSaleOrRent, "sale")) {
-            isSale = true;
-
-        }
         System.out.println("""
                 What is the type of property you want?
                 Type your options :
@@ -389,54 +383,38 @@ public class RealEstate {
         System.out.println("What is the maximum price range?");
         int maximum = scanner.nextInt();
         int forProperty = 0;
-        Property[] searchProperty = new Property[0];
-//        searchProperty = property;
-//        for (int i = 0; i < property.length; i++) {
-//            if(property[i].isForSale() == isSale){
-//                searchProperty[i] = property[i];
-//            }
-//
-//        }
+        Property[] searchProperty = new Property[property.length];
+        String thePropertyIsForSale;
         for (int i = 0; i < property.length; i++) {
-           if(property[i].isForSale() == isSale) {
-               firstArray[i] = property[i];
-               firstArray[i].setForSale(isSale);
-           }
-               if(property[i].isForSale() != isSale){
-                   firstArray[i] = property[i];
-               }
-//           if(firstArray[i].getNumberRooms() != numberOfRooms)
-               if (numberOfRooms == -999) {
-                   secondArray[i] = firstArray[i];
-               }
-               else {
-               secondArray[i] = firstArray[i];
-           }
-           if(secondArray[i].getPrice()  == -999.0 ||  ( secondArray[i].getPrice() > minimum || secondArray[i].getPrice() < maximum ) ){
-              firstArray[i] = secondArray[i];
-
-
-           }
-
+            if (property[i].isForSale()) {
+                thePropertyIsForSale = "sale";
+            } else {
+                thePropertyIsForSale = "rent";
+            }
+            if (thePropertyIsForSale.equals(isSaleOrRent) || isSaleOrRent.equals("-999")) {
+                if (property[i].getTypeProperty().equals(type) || type.equals("-999")) {
+                    if (property[i].getNumberRooms() == numberOfRooms || numberOfRooms == NO_FILTER) {
+                        if (property[i].getPrice() < maximum || maximum == NO_FILTER)
+                            if (property[i].getPrice() > minimum || minimum == NO_FILTER) {
+                                searchProperty[forProperty] = property[i];
+                                forProperty++;
+                            }
+                    }
+                }
+            }
+        }
+        Property[] withoutNull = new Property[forProperty];
+        for (int j = 0; j < forProperty; j++) {
+            withoutNull[j] = searchProperty[j];
         }
 
-//        for (int j = 0; j < property.length; j++) {
-//            if ((property[j].isForSale() == isSale) && (property[j].getTypeProperty()).equals(type) || Objects.equals(type, -999) &&
-//                    (property[j].getNumberRooms() == numberOfRooms || (numberOfRooms == -999)) &&
-//                    (property[j].getPrice() > minimum || (minimum == -999) && property[j].getPrice() < maximum || (minimum == -999))) {
-//
-//                searchProperty = new Property[forProperty];
-//                for (int i = 0; i < searchProperty.length; i++) {
-//                    searchProperty[i] = property[i];
-//                }
-//            }
-//
-//
-//        }
-        return firstArray;
+        return withoutNull;
 
     }
 }
+
+
+
 
 
 
